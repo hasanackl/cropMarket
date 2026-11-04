@@ -1,6 +1,0 @@
-@CropMarket.Api_HostAddress = http://localhost:5282
-
-GET {{CropMarket.Api_HostAddress}}/weatherforecast/
-Accept: application/json
-
-###
