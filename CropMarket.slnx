@@ -9,5 +9,9 @@
   </Folder>
   <Folder Name="/Presentation/">
     <Project Path="Presentation/CropMarket.API/CropMarket.API.csproj" />
+    <Project Path="Presentation/CropMarket.Web/CropMarket.Web.esproj">
+      <Build />
+      <Deploy />
+    </Project>
   </Folder>
 </Solution>
