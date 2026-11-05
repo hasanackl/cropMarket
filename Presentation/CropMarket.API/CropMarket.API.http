@@ -1,0 +1,97 @@
+@host = http://localhost:5045
+
+### 1. Register a farmer (FR-01) -> 200
+POST {{host}}/api/auth/register
+Content-Type: application/json
+
+{
+  "fullName": "Ali Yilmaz",
+  "email": "ali@example.com",
+  "password": "Passw0rd!",
+  "role": "Farmer"
+}
+
+### 2. Register a consumer (FR-01) -> 200
+POST {{host}}/api/auth/register
+Content-Type: application/json
+
+{
+  "fullName": "Ayse Demir",
+  "email": "ayse@example.com",
+  "password": "Passw0rd!",
+  "role": "Consumer"
+}
+
+### 3. Log in as the farmer (FR-01) -> 200
+# @name farmerLogin
+POST {{host}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "ali@example.com",
+  "password": "Passw0rd!"
+}
+
+### 4. Create a listing as the farmer (FR-02) -> 201
+POST {{host}}/api/listings
+Authorization: Bearer {{farmerLogin.response.body.$.token}}
+Content-Type: application/json
+
+{
+  "productName": "Tomato",
+  "category": "vegetables",
+  "unitPrice": 25.00,
+  "unit": "kg",
+  "availableQuantity": 50,
+  "location": "İzmir"
+}
+
+### 5. Search listings (FR-03)
+GET {{host}}/api/listings?search=tomato
+
+### 6. Log in as the consumer
+# @name consumerLogin
+POST {{host}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "ayse@example.com",
+  "password": "Passw0rd!"
+}
+
+### 7. Consumer tries to create a listing (NFR-03) -> 403
+POST {{host}}/api/listings
+Authorization: Bearer {{consumerLogin.response.body.$.token}}
+Content-Type: application/json
+
+{
+  "productName": "Apple",
+  "category": "fruits",
+  "unitPrice": 30.00,
+  "unit": "kg",
+  "availableQuantity": 20,
+  "location": "Antalya"
+}
+
+### 8. Wrong password -> 401
+POST {{host}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "ali@example.com",
+  "password": "wrong-password"
+}
+
+### 9. Invalid listing data -> 400
+POST {{host}}/api/listings
+Authorization: Bearer {{farmerLogin.response.body.$.token}}
+Content-Type: application/json
+
+{
+  "productName": "",
+  "category": "vegetables",
+  "unitPrice": -5,
+  "unit": "kg",
+  "availableQuantity": 0,
+  "location": "İzmir"
+}

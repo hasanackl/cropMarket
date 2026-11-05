@@ -1,0 +1,21 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter Variable", system-ui, sans-serif;
+
+  --color-brand-900: #1b4332;
+  --color-brand-700: #2d6a4f;
+  --color-brand-500: #40916c;
+  --color-brand-300: #74c69d;
+  --color-brand-50: #f0f7f1;
+}
+
+body {
+  @apply bg-brand-50 font-sans text-gray-900;
+}
+
+@layer base {
+  button:not(:disabled) {
+    cursor: pointer;
+  }
+}

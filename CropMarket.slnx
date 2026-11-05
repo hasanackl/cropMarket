@@ -1,0 +1,17 @@
+<Solution>
+  <Folder Name="/Core/">
+    <Project Path="Core/CropMarket.Application/CropMarket.Application.csproj" />
+    <Project Path="Core/CropMarket.Domain/CropMarket.Domain.csproj" />
+  </Folder>
+  <Folder Name="/Infrastructure/">
+    <Project Path="Infrastructure/CropMarket.Infrastructure/CropMarket.Infrastructure.csproj" />
+    <Project Path="Infrastructure/CropMarket.Persistence/CropMarket.Persistence.csproj" />
+  </Folder>
+  <Folder Name="/Presentation/">
+    <Project Path="Presentation/CropMarket.API/CropMarket.API.csproj" />
+    <Project Path="Presentation/CropMarket.Web/CropMarket.Web.esproj">
+      <Build />
+      <Deploy />
+    </Project>
+  </Folder>
+</Solution>
