@@ -2,13 +2,14 @@ using System.Text.Json.Serialization;
 using CropMarket.API.Extensions;
 using CropMarket.Infrastructure;
 using CropMarket.Persistence;
+using System.Text.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Enums are sent as text ("Farmer", "Kg"); numbers are rejected
+// Enums are sent as camelCase text ("farmer", "kg"); numbers are rejected
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
-        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter(allowIntegerValues: false)));
+        options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase, allowIntegerValues: false)));
 
 builder.Services.AddPersistence(builder.Configuration.GetConnectionString("DefaultConnection")!);
 builder.Services.AddInfrastructure(builder.Configuration);

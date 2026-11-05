@@ -39,11 +39,11 @@ Content-Type: application/json
 
 {
   "productName": "Tomato",
-  "category": "Vegetables",
+  "category": "vegetables",
   "unitPrice": 25.00,
-  "unit": "Kg",
+  "unit": "kg",
   "availableQuantity": 50,
-  "location": "Izmir"
+  "location": "İzmir"
 }
 
 ### 5. Search listings (FR-03)
@@ -66,9 +66,9 @@ Content-Type: application/json
 
 {
   "productName": "Apple",
-  "category": "Fruits",
+  "category": "fruits",
   "unitPrice": 30.00,
-  "unit": "Kg",
+  "unit": "kg",
   "availableQuantity": 20,
   "location": "Antalya"
 }
@@ -89,9 +89,9 @@ Content-Type: application/json
 
 {
   "productName": "",
-  "category": "Vegetables",
+  "category": "vegetables",
   "unitPrice": -5,
-  "unit": "Kg",
+  "unit": "kg",
   "availableQuantity": 0,
-  "location": "Izmir"
+  "location": "İzmir"
 }
