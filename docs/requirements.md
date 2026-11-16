@@ -1,4 +1,4 @@
-# CropTrader – Requirements (Week 2)
+# CropTrader – Requirements (Week 2, extended in Week 5)
 
 ## Functional Requirements
 
@@ -10,6 +10,14 @@
 | FR-04 | The system shall allow a consumer to place an order for a chosen quantity from a listing and shall record cash on delivery as the payment method. | Must |
 | FR-05 | The system shall reduce the available quantity of a listing automatically by the ordered amount when an order is placed. | Must |
 | FR-06 | The system shall allow a farmer to view the orders placed on their listings and change the status of each order to Pending, Preparing or Delivered. | Should |
+| FR-07 | The system shall allow a consumer to change the quantity of an order while it is Pending and the delivery address until it is delivered, and shall correct the stock accordingly. *(added in Week 5)* | Should |
+| FR-08 | The system shall allow a consumer to cancel an order while it is Pending and shall return the ordered quantity to the stock. *(added in Week 5)* | Should |
+| FR-09 | The system shall notify a farmer of new orders on their listings with a counter and a list of the newest orders. *(added in Week 5)* | Could |
+| FR-10 | The system shall allow a farmer to view and edit their own listings; the unit cannot be changed once the listing has orders. *(added in Week 5)* | Should |
+| FR-11 | The system shall offer the 81 provinces of Türkiye, stored in the database, as the location of a listing. *(added in Week 5)* | Could |
+| FR-12 | The system shall allow a farmer to upload one photo (JPG, PNG or WebP, at most 2 MB) for a listing. *(added in Week 5)* | Could |
+| FR-13 | The system shall allow a logged-in user to change their password after entering the current password. *(added in Week 5)* | Should |
+| FR-14 | The web client shall log the user out automatically when the login token expires. *(added in Week 5)* | Should |
 
 ## Non-Functional Requirements
 
