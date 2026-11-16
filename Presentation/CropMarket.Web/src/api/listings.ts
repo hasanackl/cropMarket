@@ -44,3 +44,18 @@ export async function createListing(request: CreateListingRequest, token: string
 
   return response.json()
 }
+
+// Returns null when the API answers 404, so the page can show "not found"
+export async function getListing(id: number): Promise<Listing | null> {
+  const response = await fetch(`${API_URL}/api/listings/${id}`)
+
+  if (response.status === 404) {
+    return null
+  }
+
+  if (!response.ok) {
+    throw new Error('Failed to load listing')
+  }
+
+  return response.json()
+}

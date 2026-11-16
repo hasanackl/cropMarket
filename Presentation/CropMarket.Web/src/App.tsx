@@ -7,6 +7,7 @@ import { useAuth } from './hooks/useAuth'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import NewListing from './pages/NewListing'
+import ListingDetail from './pages/ListingDetail'
 
 function App() {
   const { user } = useAuth()
@@ -18,6 +19,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/listings/new" element={role === 'farmer' ? <NewListing /> : <Navigate to="/login" replace />} />
+        <Route path="/listings/:id" element={<ListingDetail role={role} />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="*" element={<NotFound />} />

@@ -5,6 +5,7 @@ import { faLocationDot } from '@fortawesome/free-solid-svg-icons'
 import { useTranslation } from 'react-i18next'
 import { formatPrice } from '../utils/formatPrice'
 import ListingImage from './ListingImage'
+import { Link } from 'react-router'
 
 type ListingCardProps = {
   listing: Listing
@@ -33,9 +34,14 @@ function ListingCard({ listing }: ListingCardProps) {
           <FontAwesomeIcon icon={faLocationDot} className="mr-1 text-brand-500" /> {listing.location} · {t('listing.left', { quantity: listing.availableQuantity, unit })}
         </p>
 
-        <div className="mt-4 flex items-center gap-2 border-t border-gray-100 pt-4">
-          <Avatar name={listing.farmerName} small />
-          <span className="text-sm font-medium">{listing.farmerName}</span>
+        <div className="mt-4 flex items-center justify-between border-t border-gray-100 pt-4">
+          <div className="flex items-center gap-2">
+            <Avatar name={listing.farmerName} small />
+            <span className="text-sm font-medium">{listing.farmerName}</span>
+          </div>
+          <Link to={`/listings/${listing.id}`} className="rounded-lg border-2 border-brand-300 px-4 py-1 text-sm font-semibold text-brand-700 transition-colors hover:border-brand-700 hover:bg-brand-700 hover:text-white">
+            {t('listing.view')}
+          </Link>
         </div>
       </div>
     </div>

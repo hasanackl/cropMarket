@@ -61,3 +61,29 @@ export type CreateListingRequest = {
   availableQuantity: number
   location: string
 }
+
+export type OrderStatus = 'pending' | 'preparing' | 'delivered'
+
+export type PaymentMethod = 'cashOnDelivery'
+
+// Same fields as OrderDto in the API
+export type Order = {
+  id: number
+  listingId: number
+  productName: string
+  quantity: number
+  unit: Unit
+  unitPriceAtOrder: number
+  totalPrice: number
+  paymentMethod: PaymentMethod
+  status: OrderStatus
+  deliveryAddress: string
+  remainingQuantity: number
+  createdAt: string
+}
+
+export type CreateOrderRequest = {
+  listingId: number
+  quantity: number
+  deliveryAddress: string
+}

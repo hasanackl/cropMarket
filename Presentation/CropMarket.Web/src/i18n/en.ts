@@ -72,6 +72,7 @@ export const en = {
         guestNotice: 'Log in with a consumer account to place an order.',
         notEnoughStock: 'Not enough stock left. Please choose a smaller amount.',
         listingGone: 'This listing is no longer available.',
+        stockChanged: 'Another order changed the stock just now. Please refresh the page and try again.',
         },
    common: {
       loading: 'Loading…',

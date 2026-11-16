@@ -74,6 +74,7 @@ export const tr: typeof en = {
     guestNotice: 'Sipariş vermek için tüketici hesabıyla giriş yap.',
     notEnoughStock: 'Yeterli stok kalmadı. Lütfen daha az miktar seç.',
     listingGone: 'Bu ilan artık mevcut değil.',
+    stockChanged: 'Az önce başka bir sipariş stoğu değiştirdi. Lütfen sayfayı yenileyip tekrar dene.',
     },
    common: {
      loading: 'Yükleniyor…',
