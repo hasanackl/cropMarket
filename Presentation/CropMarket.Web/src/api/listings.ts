@@ -1,4 +1,4 @@
-import type { CreateListingRequest, Listing, ListingFilters } from '../types'
+import type { CreateListingRequest, Listing, ListingFilters, MyListing } from '../types'
 import { ApiError } from './ApiError'
 
 const API_URL = import.meta.env.VITE_API_URL
@@ -55,6 +55,19 @@ export async function getListing(id: number): Promise<Listing | null> {
 
   if (!response.ok) {
     throw new Error('Failed to load listing')
+  }
+
+  return response.json()
+}
+
+    // GET /api/listings/mine (farmers): also the sold-out listings
+export async function getMyListings(token: string): Promise<MyListing[]> {
+  const response = await fetch(`${API_URL}/api/listings/mine`, {
+    headers: { Authorization: `Bearer ${token}` },
+  })
+
+  if (!response.ok) {
+    throw new ApiError(response.status)
   }
 
   return response.json()
