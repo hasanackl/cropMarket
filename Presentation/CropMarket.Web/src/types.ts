@@ -54,6 +54,12 @@ export type RegisterRequest = {
   role: UserRole
 }
 
+// FR-13
+export type ChangePasswordRequest = {
+  currentPassword: string
+  newPassword: string
+}
+
 export type CreateListingRequest = {
   productName: string
   category: Category

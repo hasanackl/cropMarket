@@ -462,3 +462,62 @@ Content-Type: text/plain
 
 this is not a photo
 --CropBoundary--
+
+
+### 51. Change password without a token -> 401
+POST {{host}}/api/auth/change-password
+Content-Type: application/json
+
+{
+  "currentPassword": "Passw0rd!",
+  "newPassword": "NewPassw0rd!"
+}
+
+### 52. Wrong current password (FR-13) -> 400
+POST {{host}}/api/auth/change-password
+Authorization: Bearer {{consumerLogin.response.body.$.token}}
+Content-Type: application/json
+
+{
+  "currentPassword": "wrong-password",
+  "newPassword": "NewPassw0rd!"
+}
+
+### 53. New password shorter than 8 characters -> 400
+POST {{host}}/api/auth/change-password
+Authorization: Bearer {{consumerLogin.response.body.$.token}}
+Content-Type: application/json
+
+{
+  "currentPassword": "Passw0rd!",
+  "newPassword": "short"
+}
+
+### 54. Correct current password (FR-13) -> 204
+POST {{host}}/api/auth/change-password
+Authorization: Bearer {{consumerLogin.response.body.$.token}}
+Content-Type: application/json
+
+{
+  "currentPassword": "Passw0rd!",
+  "newPassword": "NewPassw0rd!"
+}
+
+### 55. Log in with the new password -> 200
+POST {{host}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "ayse@example.com",
+  "password": "NewPassw0rd!"
+}
+
+### 56. Put the old password back, so tests 1-50 keep working -> 204
+POST {{host}}/api/auth/change-password
+Authorization: Bearer {{consumerLogin.response.body.$.token}}
+Content-Type: application/json
+
+{
+  "currentPassword": "NewPassw0rd!",
+  "newPassword": "Passw0rd!"
+}

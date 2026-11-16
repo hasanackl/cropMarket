@@ -1,6 +1,8 @@
-﻿using CropMarket.Application.Features.Auth;
+using System.Security.Claims;
+using CropMarket.Application.Features.Auth;
 using CropMarket.Application.Features.Auth.Dtos;
 using CropMarket.Application.Features.Auth.Requests;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CropMarket.API.Controllers;
@@ -42,5 +44,24 @@ public class AuthController : ControllerBase
         }
 
         return Ok(response);
+    }
+
+    // POST /api/auth/change-password (FR-13; any logged-in user)
+    [Authorize]
+    [HttpPost("change-password")]
+    public async Task<IActionResult> ChangePassword(ChangePasswordRequest request)
+    {
+        var userId = int.Parse(User.FindFirstValue("sub")!);
+        var isChanged = await _authService.ChangePasswordAsync(userId, request);
+
+        // 400, not 401: a wrong password here must not log the user out
+        if (!isChanged)
+        {
+            return Problem(title: "The password could not be changed.",
+                detail: "Current password is incorrect.",
+                statusCode: StatusCodes.Status400BadRequest);
+        }
+
+        return NoContent();
     }
 }

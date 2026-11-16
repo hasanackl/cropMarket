@@ -1,4 +1,4 @@
-﻿using CropMarket.Application.Common.Interfaces;
+using CropMarket.Application.Common.Interfaces;
 using CropMarket.Application.Features.Auth.Dtos;
 using CropMarket.Application.Features.Auth.Requests;
 using CropMarket.Domain.Entities;
@@ -54,6 +54,23 @@ public class AuthService : IAuthService
         }
 
         return ToResponse(user);
+    }
+
+    // FR-13: returns false when the current password is wrong
+    public async Task<bool> ChangePasswordAsync(int userId, ChangePasswordRequest request)
+    {
+        var user = await _context.Users.FirstOrDefaultAsync(u => u.Id == userId);
+
+        // The current password must be right, so someone at an open session can't take over the account
+        if (user is null || !_passwordHasher.Verify(request.CurrentPassword, user.PasswordHash))
+        {
+            return false;
+        }
+
+        user.PasswordHash = _passwordHasher.Hash(request.NewPassword);
+        await _context.SaveChangesAsync();
+
+        return true;
     }
 
     private AuthResponse ToResponse(User user)

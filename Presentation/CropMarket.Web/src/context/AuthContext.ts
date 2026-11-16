@@ -3,6 +3,7 @@ import type { AuthUser } from '../types'
 
 export type AuthContextValue = {
   user: AuthUser | null
+  isSessionExpired: boolean
   login: (user: AuthUser) => void
   logout: () => void
 }

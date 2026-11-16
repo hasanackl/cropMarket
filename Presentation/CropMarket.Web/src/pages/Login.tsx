@@ -5,13 +5,15 @@ import { loginUser } from '../api/auth'
 import { useAuth } from '../hooks/useAuth'
 import AuthLayout from '../components/auth/AuthLayout'
 import FormField from '../components/auth/FormField'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faClock } from '@fortawesome/free-solid-svg-icons'
 
 function Login() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [errorKey, setErrorKey] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const { login } = useAuth()
+  const { login, isSessionExpired } = useAuth()
   const navigate = useNavigate()
   const { t } = useTranslation()
 
@@ -40,6 +42,13 @@ function Login() {
     <AuthLayout>
       <h1 className="text-3xl font-extrabold">{t('auth.loginTitle')}</h1>
       <p className="mt-1 text-gray-500">{t('auth.loginSubtitle')}</p>
+      
+      {isSessionExpired && (
+        <p className="mt-4 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3 text-sm font-medium text-amber-700">
+          <FontAwesomeIcon icon={faClock} className="mr-2" />
+          {t('auth.sessionExpired')}
+        </p>
+      )}
 
       <form
         onSubmit={(event) => {

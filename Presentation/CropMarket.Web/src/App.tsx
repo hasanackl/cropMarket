@@ -12,6 +12,7 @@ import MyOrders from './pages/MyOrders'
 import MyListings from './pages/MyListings'
 import FarmerOrders from './pages/FarmerOrders'
 import EditListing from './pages/EditListing'
+import Settings from './pages/Settings'
 
 function App() {
   const { user } = useAuth()
@@ -28,6 +29,7 @@ function App() {
         <Route path="/farmer/listings" element={role === 'farmer' ? <MyListings /> : <Navigate to="/login" replace />} />
         <Route path="/farmer/listings/:id/edit" element={role === 'farmer' ? <EditListing /> : <Navigate to="/login" replace />} />
         <Route path="/farmer/orders" element={role === 'farmer' ? <FarmerOrders /> : <Navigate to="/login" replace />} />
+        <Route path="/settings" element={user ? <Settings /> : <Navigate to="/login" replace />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="*" element={<NotFound />} />
