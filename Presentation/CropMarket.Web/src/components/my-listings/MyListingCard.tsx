@@ -13,13 +13,12 @@ type MyListingCardProps = {
 
 function MyListingCard({ listing }: MyListingCardProps) {
   const { t, i18n } = useTranslation()
+  const unit = t(`units.${listing.unit}`)
 
   return (
     <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
       <div className="relative h-40">
         <ListingImage
-          imageUrl={listing.imageUrl}
-          name={listing.name}
           category={listing.category}
           className={listing.isActive ? 'h-full w-full' : 'h-full w-full grayscale'}
         />
@@ -33,13 +32,13 @@ function MyListingCard({ listing }: MyListingCardProps) {
       </div>
 
       <div className="p-5">
-        <h3 className="text-lg font-semibold">{listing.name}</h3>
+        <h3 className="text-lg font-semibold">{listing.productName}</h3>
         <p className="mt-1">
-          <span className="text-2xl font-bold text-brand-700">{formatPrice(listing.price)}</span>
-          <span className="text-gray-500"> / {listing.unit}</span>
+          <span className="text-2xl font-bold text-brand-700">{formatPrice(listing.unitPrice)}</span>
+          <span className="text-gray-500"> / {unit}</span>
         </p>
         <p className="mt-1 text-sm text-gray-500">
-          <FontAwesomeIcon icon={faLocationDot} className="mr-1 text-brand-500" /> {listing.city} · {t('listing.left', { quantity: listing.quantity, unit: listing.unit })}
+          <FontAwesomeIcon icon={faLocationDot} className="mr-1 text-brand-500" /> {listing.location} · {t('listing.left', { quantity: listing.availableQuantity, unit })}
         </p>
 
         <div className="mt-4 flex items-center justify-between border-t border-gray-100 pt-4 text-sm text-gray-500">

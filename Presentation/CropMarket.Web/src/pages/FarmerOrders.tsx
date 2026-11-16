@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faBoxOpen, faCheck, faCircleCheck, faClock, faSeedling } from '@fortawesome/free-solid-svg-icons'
 import type { ReceivedOrder, StatusFilter, SortOrder } from '../types'
 import { getReceivedOrders, updateOrderStatus } from '../api/orders'
-import { getListings } from '../api/listings'
+import { getMyListings } from '../api/listings'
 import { ApiError } from '../api/ApiError'
 import { useAuth } from '../hooks/useAuth'
 import { nextStatus } from '../constants/orderStatus'
@@ -34,8 +34,8 @@ function FarmerOrders() {
       .then((data) => dispatch({ type: 'loaded', orders: data }))
       .catch(() => dispatch({ type: 'failed' }))
 
-    getListings()
-      .then((listings) => setActiveListingCount(listings.filter((listing) => listing.farmerId === user.id).length))
+    getMyListings(user.token)
+      .then((listings) => setActiveListingCount(listings.filter((listing) => listing.isActive).length))
       .catch(() => dispatch({ type: 'failed' }))
   }, [user])
 
@@ -69,11 +69,10 @@ function FarmerOrders() {
     }
 
     try {
-
       const updated = await updateOrderStatus(order.id, next, token)
 
       const message = t('farmerOrders.statusChanged', {
-        product: updated.listingName,
+        product: updated.productName,
         name: updated.consumerName,
         status: t(`orderStatus.${updated.status}`),
       })

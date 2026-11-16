@@ -10,6 +10,7 @@ export const en = {
     logout: 'Log out',
     openMenu: 'Open menu',
     closeMenu: 'Close menu',
+    newOrders: 'New orders',
   },
   roles: {
     guest: 'Guest',
@@ -133,6 +134,7 @@ export const en = {
         pending: 'Pending',
         preparing: 'Preparing',
         delivered: 'Delivered',
+        cancelled: 'Cancelled',
   },
   farmerOrders: {
         goodMorning: 'Good morning, {{name}}',
@@ -154,7 +156,7 @@ export const en = {
         newest: 'Newest first',
         oldest: 'Oldest first',
         empty: 'No orders here yet.',
-        statusChanged: 'Order #{{id}} is now {{status}}',
+        statusChanged: '{{product}} order from {{name}} is now {{status}}',
   },
     myListings: {
         title: 'My listings',
@@ -165,6 +167,13 @@ export const en = {
         orders_other: '{{count}} orders',
         empty: 'You have no listings yet.',
         createFirst: 'Create your first listing',
+        edit: 'Edit',
+  },
+    notifications: {
+        title: 'New orders',
+        item: '{{name}} ordered {{quantity}} {{unit}} of {{product}}',
+        empty: 'No new orders.',
+        seeAll: 'See all orders',
   },
     myOrders: {
         title: 'My orders',
@@ -177,5 +186,8 @@ export const en = {
         updateRejected: 'This change is no longer possible. There may not be enough stock, or the order has moved to the next step.',
         empty: 'You have no orders yet.',
         browse: 'Browse products',
+        cancelOrder: 'Cancel order',
+        cancelConfirm: 'Do you want to cancel this order?',
+        cancelRejected: 'This order can no longer be cancelled. The farmer may have started preparing it.',
   },
 }

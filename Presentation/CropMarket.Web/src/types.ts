@@ -62,7 +62,7 @@ export type CreateListingRequest = {
   location: string
 }
 
-export type OrderStatus = 'pending' | 'preparing' | 'delivered'
+export type OrderStatus = 'pending' | 'preparing' | 'delivered' | 'cancelled'
 
 export type PaymentMethod = 'cashOnDelivery'
 
@@ -87,8 +87,6 @@ export type CreateOrderRequest = {
   quantity: number
   deliveryAddress: string
 }
-
-// Add to the end of src/types.ts (Week 5, Stage 3)
 
 // Same fields as MyOrderDto in the API
 export type MyOrder = {
@@ -134,6 +132,12 @@ export type MyListing = {
   isActive: boolean
   orderCount: number
   createdAt: string
+}
+
+// Same fields as UpdateOrderRequest in the API (FR-07)
+export type UpdateOrderRequest = {
+  quantity: number
+  deliveryAddress: string
 }
 
 export type StatusFilter = 'all' | OrderStatus

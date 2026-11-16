@@ -12,6 +12,7 @@ export const tr: typeof en = {
     logout: 'Çıkış yap',
     openMenu: 'Menüyü aç',
     closeMenu: 'Menüyü kapat',
+    newOrders: 'Yeni siparişler',
   },
   roles: {
     guest: 'Misafir',
@@ -135,6 +136,7 @@ export const tr: typeof en = {
         pending: 'Bekliyor',
         preparing: 'Hazırlanıyor',
         delivered: 'Teslim edildi',
+        cancelled: 'İptal edildi',
   },
   farmerOrders: {
         goodMorning: 'Günaydın, {{name}}',
@@ -156,7 +158,7 @@ export const tr: typeof en = {
         newest: 'Yeniden eskiye',
         oldest: 'Eskiden yeniye',
         empty: 'Burada henüz sipariş yok.',
-        statusChanged: '#{{id}} numaralı sipariş artık: {{status}}',
+        statusChanged: '{{name}} adlı alıcının {{product}} siparişi artık: {{status}}',
   },
     myListings: {
         title: 'İlanlarım',
@@ -167,6 +169,13 @@ export const tr: typeof en = {
         orders_other: '{{count}} sipariş',
         empty: 'Henüz hiç ilanın yok.',
         createFirst: 'İlk ilanını oluştur',
+        edit: 'Düzenle',
+  },
+    notifications: {
+        title: 'Yeni siparişler',
+        item: '{{name}}, {{quantity}} {{unit}} {{product}} sipariş etti',
+        empty: 'Yeni sipariş yok.',
+        seeAll: 'Tüm siparişleri gör',
   },
     myOrders: {
         title: 'Siparişlerim',
@@ -179,5 +188,8 @@ export const tr: typeof en = {
         updateRejected: 'Bu değişiklik artık yapılamıyor. Stok yetersiz olabilir ya da sipariş bir sonraki adıma geçmiş olabilir.',
         empty: 'Henüz siparişin yok.',
         browse: 'Ürünlere göz at',
+        cancelOrder: 'Siparişi iptal et',
+        cancelConfirm: 'Bu siparişi iptal etmek istiyor musun?',
+        cancelRejected: 'Bu sipariş artık iptal edilemez. Çiftçi hazırlamaya başlamış olabilir.',
   },
 }

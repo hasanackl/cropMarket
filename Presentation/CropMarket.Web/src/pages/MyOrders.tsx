@@ -59,6 +59,13 @@ function MyOrders() {
         return
       }
 
+      // 400: not enough stock or a wrong amount
+      if (error instanceof ApiError && error.status === 400) {
+        setErrorKey('order.notEnoughStock')
+        return
+      }
+
+      // 409: the order has moved on or another order changed the stock
       if (error instanceof ApiError && error.status === 409) {
         setErrorKey('myOrders.updateRejected')
         return
@@ -70,7 +77,7 @@ function MyOrders() {
     }
   }
 
-    async function handleCancel(id: number, token: string) {
+  async function handleCancel(id: number, token: string) {
     // The browser's own yes/no box; nothing happens if the user says no
     if (!window.confirm(t('myOrders.cancelConfirm'))) {
       return

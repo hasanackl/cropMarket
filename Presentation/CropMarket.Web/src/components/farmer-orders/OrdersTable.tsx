@@ -34,14 +34,18 @@ function OrdersTable({ orders, onAdvance }: OrdersTableProps) {
               <td className="px-4 py-4">
                 <div className="flex items-center gap-3">
                   <div className="h-12 w-12 shrink-0 overflow-hidden rounded-xl">
-                    <ListingImage imageUrl={order.imageUrl} name={order.listingName} category={order.category} className="h-full w-full" />
+                    <ListingImage category={order.category} className="h-full w-full" iconSize="text-xl" />
                   </div>
-                  <span className="font-semibold">{order.listingName}</span>
+                  <span className="font-semibold">{order.productName}</span>
                 </div>
               </td>
-              <td className="px-4 py-4">{order.consumerName}</td>
               <td className="px-4 py-4">
-                {order.quantity} {order.unit}
+                <p>{order.consumerName}</p>
+                {/* The farmer may need to call the buyer about the delivery */}
+                {order.consumerPhone && <p className="text-sm text-gray-500">{order.consumerPhone}</p>}
+              </td>
+              <td className="px-4 py-4">
+                {order.quantity} {t(`units.${order.unit}`)}
               </td>
               <td className="px-4 py-4 font-bold">{formatPrice(order.totalPrice)}</td>
               <td className="px-4 py-4 text-gray-500">{order.deliveryAddress}</td>
