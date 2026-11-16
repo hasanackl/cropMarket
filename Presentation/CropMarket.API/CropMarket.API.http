@@ -95,3 +95,116 @@ Content-Type: application/json
   "availableQuantity": 0,
   "location": "İzmir"
 }
+
+### 10. Farmer creates a listing for the order tests (50 kg) -> 201
+# @name orderListing
+POST {{host}}/api/listings
+Authorization: Bearer {{farmerLogin.response.body.$.token}}
+Content-Type: application/json
+{
+  
+"productName": "Cucumber",
+  
+"category": "vegetables",
+  
+"unitPrice": 20.00,
+  
+"unit": "kg",
+  
+"availableQuantity": 50,
+  
+"location": "İzmir"
+}
+### 11. Consumer orders 10 kg (FR-04, FR-05) -> 201, remainingQuantity 40
+POST {{host}}/api/orders
+Authorization: Bearer {{consumerLogin.response.body.$.token}}
+Content-Type: application/json
+{
+  
+"listingId": {{orderListing.response.body.$.id}},
+  
+"quantity": 10,
+  
+"deliveryAddress": "Bakirkoy, Istanbul"
+}
+
+### 12. Quantity 0 (NFR-02) -> 400
+POST {{host}}/api/orders
+Authorization: Bearer {{consumerLogin.response.body.$.token}}
+Content-Type: application/json
+{
+  
+"listingId": {{orderListing.response.body.$.id}},
+  
+"quantity": 0,
+  
+"deliveryAddress": "Bakirkoy, Istanbul"
+}
+
+### 13. Quantity -1 (NFR-02) -> 400
+POST {{host}}/api/orders
+Authorization: Bearer {{consumerLogin.response.body.$.token}}
+Content-Type: application/json
+{
+  
+"listingId": {{orderListing.response.body.$.id}},
+  
+"quantity": -1,
+  
+"deliveryAddress": "Bakirkoy, Istanbul"
+}
+
+
+### 14. More than the stock: 41 kg when 40 kg is left (NFR-02) -> 400, stock stays 40
+POST {{host}}/api/orders
+Authorization: Bearer {{consumerLogin.response.body.$.token}}
+Content-Type: application/json
+{
+  
+"listingId": {{orderListing.response.body.$.id}},
+  
+"quantity": 41,
+  
+"deliveryAddress": "Bakirkoy, Istanbul"
+}
+
+### 15. Farmer tries to place an order (NFR-03) -> 403
+POST {{host}}/api/orders
+Authorization: Bearer {{farmerLogin.response.body.$.token}}
+Content-Type: application/json
+{
+  
+"listingId": {{orderListing.response.body.$.id}},
+  
+"quantity": 1,
+  
+"deliveryAddress": "Bakirkoy, Istanbul"
+}
+
+### 16. Order without logging in -> 401
+POST {{host}}/api/orders
+Content-Type: application/json
+{
+  
+"listingId": {{orderListing.response.body.$.id}},
+  
+"quantity": 1,
+  
+"deliveryAddress": "Bakirkoy, Istanbul"
+}
+
+### 17. Listing that does not exist -> 404
+POST {{host}}/api/orders
+Authorization: Bearer {{consumerLogin.response.body.$.token}}
+Content-Type: application/json
+{
+  
+"listingId": 99999,
+  
+"quantity": 1,
+  
+"deliveryAddress": "Bakirkoy, Istanbul"
+}
+
+### 18. Check the stock after the tests -> availableQuantity 40
+GET {{host}}/api/listings/{{orderListing.response.body.$.id}}
