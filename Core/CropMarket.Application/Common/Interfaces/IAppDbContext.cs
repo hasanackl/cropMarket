@@ -1,4 +1,4 @@
-﻿using CropMarket.Domain.Entities;
+using CropMarket.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace CropMarket.Application.Common.Interfaces;
@@ -10,6 +10,7 @@ public interface IAppDbContext
     DbSet<User> Users { get; }
     DbSet<Listing> Listings { get; }
     DbSet<Order> Orders { get; }
+    DbSet<City> Cities { get; }
 
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
 }

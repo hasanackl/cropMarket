@@ -34,7 +34,7 @@ function OrdersTable({ orders, onAdvance }: OrdersTableProps) {
               <td className="px-4 py-4">
                 <div className="flex items-center gap-3">
                   <div className="h-12 w-12 shrink-0 overflow-hidden rounded-xl">
-                    <ListingImage category={order.category} className="h-full w-full" iconSize="text-xl" />
+                    <ListingImage imageUrl={order.imageUrl} name={order.productName} category={order.category} className="h-full w-full" iconSize="text-xl" />
                   </div>
                   <span className="font-semibold">{order.productName}</span>
                 </div>

@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
-import type { CategoryFilter, Listing } from '../types'
+import type { CategoryFilter, City, Listing } from '../types'
 import { getListings } from '../api/listings'
-import { cities } from '../constants/cities'
+import { getCities } from '../api/cities'
 import Hero from '../components/home/Hero'
 import SearchBar from '../components/home/SearchBar'
 import CategoryChips from '../components/home/CategoryChips'
@@ -18,7 +18,15 @@ function Home() {
   const [selectedCategory, setSelectedCategory] = useState<CategoryFilter>('all')
   const [search, setSearch] = useState('')
   const [location, setLocation] = useState('')
+  const [cities, setCities] = useState<City[]>([])
   const { t } = useTranslation()
+
+  // FR-11: the location filter uses the same city list as the listing form
+  useEffect(() => {
+    getCities()
+      .then((data) => setCities(data))
+      .catch(() => setCities([]))
+  }, [])
 
   useEffect(() => {
     // ignore: an older, slower response must not overwrite a newer one
@@ -58,7 +66,7 @@ function Home() {
         onSearchChange={setSearch}
         location={location}
         onLocationChange={setLocation}
-        locations={cities}
+        locations={cities.map((city) => city.name)}
       />
 
       <main className="px-6 py-8 lg:px-10">

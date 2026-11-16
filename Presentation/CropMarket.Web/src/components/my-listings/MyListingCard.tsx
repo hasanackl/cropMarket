@@ -19,6 +19,8 @@ function MyListingCard({ listing }: MyListingCardProps) {
     <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
       <div className="relative h-40">
         <ListingImage
+          imageUrl={listing.imageUrl}
+          name={listing.productName}
           category={listing.category}
           className={listing.isActive ? 'h-full w-full' : 'h-full w-full grayscale'}
         />

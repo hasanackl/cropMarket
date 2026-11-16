@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 using CropMarket.API.Extensions;
+using CropMarket.API.Services;
 using CropMarket.Application;
 using CropMarket.Infrastructure;
 using CropMarket.Persistence;
@@ -17,6 +18,7 @@ builder.Services.AddPersistence(builder.Configuration.GetConnectionString("Defau
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddJwtAuthentication(builder.Configuration);
 builder.Services.AddSwaggerWithJwt();
+builder.Services.AddScoped<IImageStorage, ImageStorage>();
 
 // Allow the React dev server to call the API (risk R2)
 builder.Services.AddCors(options =>
@@ -33,6 +35,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+// Serves the uploaded listing photos from wwwroot/uploads (FR-12)
+app.UseStaticFiles();
 app.UseCors("Frontend");
 
 app.UseAuthentication();

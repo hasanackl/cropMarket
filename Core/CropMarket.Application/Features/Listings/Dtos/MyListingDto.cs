@@ -1,4 +1,4 @@
-﻿using CropMarket.Domain.Enums;
+using CropMarket.Domain.Enums;
 
 namespace CropMarket.Application.Features.Listings.Dtos;
 
@@ -13,4 +13,5 @@ public record MyListingDto(
     string Location,
     bool IsActive,
     int OrderCount,
-    DateTime CreatedAt);
+    DateTime CreatedAt,
+    string? ImageUrl);

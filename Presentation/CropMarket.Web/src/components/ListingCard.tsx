@@ -18,7 +18,7 @@ function ListingCard({ listing }: ListingCardProps) {
   return (
     <div className="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm">
       <div className="relative h-40">
-        <ListingImage category={listing.category} className="h-full w-full" />
+        <ListingImage imageUrl={listing.imageUrl} name={listing.productName} category={listing.category} className="h-full w-full" />
         <span className="absolute left-3 top-3 rounded-full bg-white px-3 py-1 text-xs font-semibold text-brand-700">
           {t(`categories.${listing.category}`, { defaultValue: listing.category })}
         </span>

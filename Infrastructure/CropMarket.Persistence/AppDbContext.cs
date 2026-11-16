@@ -1,4 +1,4 @@
-﻿using CropMarket.Application.Common.Interfaces;
+using CropMarket.Application.Common.Interfaces;
 using CropMarket.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -13,6 +13,7 @@ public class AppDbContext : DbContext, IAppDbContext
     public DbSet<User> Users { get; set; } = null!;
     public DbSet<Listing> Listings { get; set; } = null!;
     public DbSet<Order> Orders { get; set; } = null!;
+    public DbSet<City> Cities { get; set; } = null!;
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

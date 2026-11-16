@@ -382,3 +382,83 @@ Content-Type: application/json
 
 ### 42. Check the stock is back -> availableQuantity same as before test 31
 GET {{host}}/api/listings/{{orderListing.response.body.$.id}}
+
+
+### 43. City list from the database (FR-11) -> 200, 81 cities
+GET {{host}}/api/cities
+
+### 44. Farmer opens the edit form of an own listing (FR-10) -> 200
+GET {{host}}/api/listings/{{orderListing.response.body.$.id}}/edit
+Authorization: Bearer {{farmerLogin.response.body.$.token}}
+
+### 45. Farmer changes price, stock and city (FR-10) -> 200
+PUT {{host}}/api/listings/{{orderListing.response.body.$.id}}
+Authorization: Bearer {{farmerLogin.response.body.$.token}}
+Content-Type: application/json
+
+{
+  "productName": "Cucumber",
+  "category": "vegetables",
+  "unitPrice": 22.50,
+  "unit": "kg",
+  "availableQuantity": 60,
+  "location": "Manisa"
+}
+
+### 46. City that is not in the list -> 400
+PUT {{host}}/api/listings/{{orderListing.response.body.$.id}}
+Authorization: Bearer {{farmerLogin.response.body.$.token}}
+Content-Type: application/json
+
+{
+  "productName": "Cucumber",
+  "category": "vegetables",
+  "unitPrice": 22.50,
+  "unit": "kg",
+  "availableQuantity": 60,
+  "location": "Atlantis"
+}
+
+### 47. Category that is not in the fixed list -> 400
+PUT {{host}}/api/listings/{{orderListing.response.body.$.id}}
+Authorization: Bearer {{farmerLogin.response.body.$.token}}
+Content-Type: application/json
+
+{
+  "productName": "Cucumber",
+  "category": "meat",
+  "unitPrice": 22.50,
+  "unit": "kg",
+  "availableQuantity": 60,
+  "location": "Manisa"
+}
+
+### 48. Change the unit of a listing that already has orders -> 400
+PUT {{host}}/api/listings/{{orderListing.response.body.$.id}}
+Authorization: Bearer {{farmerLogin.response.body.$.token}}
+Content-Type: application/json
+
+{
+  "productName": "Cucumber",
+  "category": "vegetables",
+  "unitPrice": 22.50,
+  "unit": "box",
+  "availableQuantity": 60,
+  "location": "Manisa"
+}
+
+### 49. Consumer tries to open the edit form (NFR-03) -> 403
+GET {{host}}/api/listings/{{orderListing.response.body.$.id}}/edit
+Authorization: Bearer {{consumerLogin.response.body.$.token}}
+
+### 50. Upload a text file as the photo (FR-12) -> 400
+PUT {{host}}/api/listings/{{orderListing.response.body.$.id}}/image
+Authorization: Bearer {{farmerLogin.response.body.$.token}}
+Content-Type: multipart/form-data; boundary=CropBoundary
+
+--CropBoundary
+Content-Disposition: form-data; name="image"; filename="notes.txt"
+Content-Type: text/plain
+
+this is not a photo
+--CropBoundary--

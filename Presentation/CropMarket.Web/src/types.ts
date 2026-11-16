@@ -27,6 +27,7 @@ export type Listing = {
   farmerId: number
   farmerName: string
   createdAt: string
+  imageUrl: string | null
 }
 
 export type ListingFilters = {
@@ -60,6 +61,19 @@ export type CreateListingRequest = {
   unit: Unit
   availableQuantity: number
   location: string
+}
+
+// The current values in the edit form (EditListingDto in the API, FR-10)
+export type EditableListing = CreateListingRequest & {
+  id: number
+  imageUrl: string | null
+  hasOrders: boolean
+}
+
+// Same fields as CityDto in the API (FR-11)
+export type City = {
+  id: number
+  name: string
 }
 
 export type OrderStatus = 'pending' | 'preparing' | 'delivered' | 'cancelled'
@@ -102,6 +116,7 @@ export type MyOrder = {
   status: OrderStatus
   deliveryAddress: string
   createdAt: string
+  imageUrl: string | null
 }
 
 // Same fields as ReceivedOrderDto in the API
@@ -118,6 +133,7 @@ export type ReceivedOrder = {
   status: OrderStatus
   deliveryAddress: string
   createdAt: string
+  imageUrl: string | null
 }
 
 // Same fields as MyListingDto in the API
@@ -132,6 +148,7 @@ export type MyListing = {
   isActive: boolean
   orderCount: number
   createdAt: string
+  imageUrl: string | null
 }
 
 // Same fields as UpdateOrderRequest in the API (FR-07)

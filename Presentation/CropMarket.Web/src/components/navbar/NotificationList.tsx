@@ -31,7 +31,7 @@ function NotificationList({ orders, onClose }: NotificationListProps) {
             className="flex items-center gap-3 border-b border-gray-100 px-4 py-3 hover:bg-brand-50"
           >
             <div className="h-10 w-10 shrink-0 overflow-hidden rounded-lg">
-              <ListingImage category={order.category} className="h-full w-full" iconSize="text-lg" />
+              <ListingImage imageUrl={order.imageUrl} name={order.productName} category={order.category} className="h-full w-full" iconSize="text-lg" />
             </div>
             <div>
               <p className="text-sm">

@@ -158,6 +158,14 @@ export const en = {
         empty: 'No orders here yet.',
         statusChanged: '{{product}} order from {{name}} is now {{status}}',
   },
+    editListing: {
+        title: 'Edit listing',
+        subtitle: 'Change the details of your listing.',
+        save: 'Save changes',
+        notFound: 'This listing could not be found.',
+        unitLocked: 'This listing already has orders, so its unit cannot be changed.',
+        stockChanged: 'An order changed the stock while you were editing. Please reload the page and try again.',
+  },
     myListings: {
         title: 'My listings',
         summary: '{{active}} active · {{soldOut}} sold out',

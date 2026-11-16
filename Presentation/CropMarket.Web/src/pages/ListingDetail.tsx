@@ -65,7 +65,7 @@ function ListingDetail({ role }: ListingDetailProps) {
       <div className="mt-6 grid gap-8 lg:grid-cols-5">
         <div className="space-y-4 lg:col-span-3">
           <div className="relative overflow-hidden rounded-3xl">
-            <ListingImage category={listing.category} className="h-80 w-full lg:h-96" />
+            <ListingImage imageUrl={listing.imageUrl} name={listing.productName} category={listing.category} className="h-80 w-full lg:h-96" />
             <span className="absolute left-4 top-4 rounded-full bg-white px-3 py-1 text-sm font-semibold text-brand-700">
               {category}
             </span>

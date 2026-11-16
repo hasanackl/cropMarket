@@ -326,7 +326,8 @@ public class OrderService : IOrderService
         o.PaymentMethod,
         o.Status,
         o.DeliveryAddress,
-        o.CreatedAt);
+        o.CreatedAt,
+        o.Listing.ImageUrl);
 
     private static readonly Expression<Func<Order, ReceivedOrderDto>> ToReceivedDto = o => new ReceivedOrderDto(
         o.Id,
@@ -340,5 +341,6 @@ public class OrderService : IOrderService
         o.TotalPrice,
         o.Status,
         o.DeliveryAddress,
-        o.CreatedAt);
+        o.CreatedAt,
+        o.Listing.ImageUrl);
 }

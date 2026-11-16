@@ -1,4 +1,4 @@
-﻿using CropMarket.Domain.Enums;
+using CropMarket.Domain.Enums;
 
 namespace CropMarket.Application.Features.Orders.Dtos;
 
@@ -16,4 +16,5 @@ public record ReceivedOrderDto(
     decimal TotalPrice,
     OrderStatus Status,
     string DeliveryAddress,
-    DateTime CreatedAt);
+    DateTime CreatedAt,
+    string? ImageUrl);

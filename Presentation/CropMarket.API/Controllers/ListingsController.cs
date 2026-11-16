@@ -1,7 +1,9 @@
-﻿using System.Security.Claims;
+using System.Security.Claims;
+using CropMarket.API.Services;
 using CropMarket.Application.Features.Listings;
 using CropMarket.Application.Features.Listings.Dtos;
 using CropMarket.Application.Features.Listings.Requests;
+using CropMarket.Application.Features.Listings.Results;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,19 +14,20 @@ namespace CropMarket.API.Controllers;
 public class ListingsController : ControllerBase
 {
     private readonly IListingService _listingService;
+    private readonly IImageStorage _imageStorage;
 
-    public ListingsController(IListingService listingService)
+    public ListingsController(IListingService listingService, IImageStorage imageStorage)
     {
         _listingService = listingService;
+        _imageStorage = imageStorage;
     }
 
-    // GET /api/listings?search=tomato&category=Vegetables&location=Izmir (FR-03)
+    // GET /api/listings?search=tomato&category=vegetables&location=İzmir (FR-03)
     [HttpGet]
     public async Task<ActionResult<List<ListingDto>>> Search(
         [FromQuery] string? search, [FromQuery] string? category, [FromQuery] string? location)
     {
-        var listings = await _listingService.SearchAsync(search, category, location);
-        return Ok(listings);
+        return Ok(await _listingService.SearchAsync(search, category, location));
     }
 
     // GET /api/listings/5 (FR-03)
@@ -46,11 +49,14 @@ public class ListingsController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<ListingDto>> Create(CreateListingRequest request)
     {
-        // The farmer id comes from the token, not from the form
-        var farmerId = int.Parse(User.FindFirstValue("sub")!);
-        var listing = await _listingService.CreateAsync(farmerId, request);
+        var result = await _listingService.CreateAsync(GetUserId(), request);
 
-        return CreatedAtAction(nameof(GetById), new { id = listing.Id }, listing);
+        if (!result.IsSuccess)
+        {
+            return ToProblem(result, "The listing could not be created.");
+        }
+
+        return CreatedAtAction(nameof(GetById), new { id = result.Listing!.Id }, result.Listing);
     }
 
     // GET /api/listings/mine ("My listings"; farmers only)
@@ -58,7 +64,90 @@ public class ListingsController : ControllerBase
     [HttpGet("mine")]
     public async Task<ActionResult<List<MyListingDto>>> GetMine()
     {
-        var farmerId = int.Parse(User.FindFirstValue("sub")!);
-        return Ok(await _listingService.GetMineAsync(farmerId));
+        return Ok(await _listingService.GetMineAsync(GetUserId()));
     }
+
+    // GET /api/listings/5/edit (FR-10): current values for the edit form
+    [Authorize(Roles = "Farmer")]
+    [HttpGet("{id:int}/edit")]
+    public async Task<ActionResult<EditListingDto>> GetForEdit(int id)
+    {
+        var listing = await _listingService.GetForEditAsync(GetUserId(), id);
+
+        if (listing is null)
+        {
+            return NotFound();
+        }
+
+        return Ok(listing);
+    }
+
+    // PUT /api/listings/5 (FR-10)
+    [Authorize(Roles = "Farmer")]
+    [HttpPut("{id:int}")]
+    public async Task<ActionResult<ListingDto>> Update(int id, UpdateListingRequest request)
+    {
+        var result = await _listingService.UpdateAsync(GetUserId(), id, request);
+
+        if (!result.IsSuccess)
+        {
+            return ToProblem(result, "The listing could not be changed.");
+        }
+
+        return Ok(result.Listing);
+    }
+
+    // PUT /api/listings/5/image (FR-12): multipart/form-data with one file named "image"
+    [Authorize(Roles = "Farmer")]
+    [HttpPut("{id:int}/image")]
+    public async Task<ActionResult<ListingDto>> UploadImage(int id, IFormFile image)
+    {
+        var farmerId = GetUserId();
+        var current = await _listingService.GetForEditAsync(farmerId, id);
+
+        if (current is null)
+        {
+            return NotFound();
+        }
+
+        if (!_imageStorage.IsValid(image))
+        {
+            return Problem(title: "The photo could not be saved.",
+                detail: "The photo must be a JPG, PNG or WEBP file up to 2 MB.",
+                statusCode: StatusCodes.Status400BadRequest);
+        }
+
+        // Each category gets its own folder, e.g. /uploads/fruits
+        var imageUrl = await _imageStorage.SaveAsync(image, current.Category.ToLowerInvariant());
+        var result = await _listingService.SetImageAsync(farmerId, id, imageUrl);
+
+        if (!result.IsSuccess)
+        {
+            _imageStorage.Delete(imageUrl);
+            return ToProblem(result, "The photo could not be saved.");
+        }
+
+        // The old photo was replaced, so its file is no longer needed
+        if (current.ImageUrl is not null)
+        {
+            _imageStorage.Delete(current.ImageUrl);
+        }
+
+        return Ok(result.Listing);
+    }
+
+    private ActionResult ToProblem(SaveListingResult result, string title)
+    {
+        var statusCode = result.Error switch
+        {
+            SaveListingError.ListingNotFound => StatusCodes.Status404NotFound,
+            SaveListingError.StockChanged => StatusCodes.Status409Conflict,
+            _ => StatusCodes.Status400BadRequest
+        };
+
+        return Problem(title: title, detail: result.Message, statusCode: statusCode);
+    }
+
+    // The user id comes from the token, never from the request body
+    private int GetUserId() => int.Parse(User.FindFirstValue("sub")!);
 }

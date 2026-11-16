@@ -160,6 +160,14 @@ export const tr: typeof en = {
         empty: 'Burada henüz sipariş yok.',
         statusChanged: '{{name}} adlı alıcının {{product}} siparişi artık: {{status}}',
   },
+    editListing: {
+        title: 'İlanı düzenle',
+        subtitle: 'İlanının bilgilerini değiştir.',
+        save: 'Değişiklikleri kaydet',
+        notFound: 'Bu ilan bulunamadı.',
+        unitLocked: 'Bu ilana sipariş gelmiş, bu yüzden birimi değiştirilemez.',
+        stockChanged: 'Sen düzenlerken bir sipariş stoku değiştirdi. Lütfen sayfayı yenileyip tekrar dene.',
+  },
     myListings: {
         title: 'İlanlarım',
         summary: '{{active}} aktif · {{soldOut}} tükendi',

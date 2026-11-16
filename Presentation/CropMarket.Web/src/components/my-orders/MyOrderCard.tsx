@@ -24,7 +24,7 @@ function MyOrderCard({ order, canEdit, canCancel, onEdit, onCancelOrder, childre
     <div className="rounded-3xl border border-gray-200 bg-white p-6 shadow-sm">
       <div className="flex flex-wrap items-center gap-6">
         <div className="h-24 w-24 shrink-0 overflow-hidden rounded-2xl">
-          <ListingImage category={order.category} className="h-full w-full" iconSize="text-4xl" />
+          <ListingImage imageUrl={order.imageUrl} name={order.productName} category={order.category} className="h-full w-full" iconSize="text-4xl" />
         </div>
 
         <div className="min-w-60 flex-1">
