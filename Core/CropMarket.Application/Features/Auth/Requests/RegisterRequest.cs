@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using CropMarket.Domain.Enums;
 
-namespace CropMarket.Application.Auth;
+namespace CropMarket.Application.Features.Auth.Requests;
 
 public record RegisterRequest(
     [Required, MaxLength(100)] string FullName,

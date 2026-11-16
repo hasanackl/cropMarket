@@ -1,6 +1,6 @@
 ﻿using CropMarket.Domain.Entities;
 
-namespace CropMarket.Application.Auth;
+namespace CropMarket.Application.Common.Interfaces;
 
 public interface ITokenService
 {

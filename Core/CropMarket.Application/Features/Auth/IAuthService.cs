@@ -1,4 +1,7 @@
-﻿namespace CropMarket.Application.Auth;
+﻿using CropMarket.Application.Features.Auth.Dtos;
+using CropMarket.Application.Features.Auth.Requests;
+
+namespace CropMarket.Application.Features.Auth;
 
 public interface IAuthService
 {

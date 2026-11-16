@@ -1,6 +1,4 @@
-﻿using CropMarket.Application.Auth;
-using CropMarket.Application.Listings;
-using CropMarket.Persistence.Services;
+﻿using CropMarket.Application.Common.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -13,8 +11,8 @@ public static class DependencyInjection
         services.AddDbContext<AppDbContext>(options =>
             options.UseSqlServer(connectionString));
 
-        services.AddScoped<IAuthService, AuthService>();
-        services.AddScoped<IListingService, ListingService>();
+        // The services ask for IAppDbContext; they get the same scoped AppDbContext
+        services.AddScoped<IAppDbContext>(provider => provider.GetRequiredService<AppDbContext>());
 
         return services;
     }

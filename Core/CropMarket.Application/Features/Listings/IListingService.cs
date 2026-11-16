@@ -1,4 +1,7 @@
-﻿namespace CropMarket.Application.Listings;
+﻿using CropMarket.Application.Features.Listings.Dtos;
+using CropMarket.Application.Features.Listings.Requests;
+
+namespace CropMarket.Application.Features.Listings;
 
 public interface IListingService
 {

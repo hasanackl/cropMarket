@@ -1,15 +1,17 @@
 ﻿using System.Linq.Expressions;
-using CropMarket.Application.Listings;
+using CropMarket.Application.Common.Interfaces;
+using CropMarket.Application.Features.Listings.Dtos;
+using CropMarket.Application.Features.Listings.Requests;
 using CropMarket.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace CropMarket.Persistence.Services;
+namespace CropMarket.Application.Features.Listings;
 
 public class ListingService : IListingService
 {
-    private readonly AppDbContext _context;
+    private readonly IAppDbContext _context;
 
-    public ListingService(AppDbContext context)
+    public ListingService(IAppDbContext context)
     {
         _context = context;
     }

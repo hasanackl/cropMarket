@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 using CropMarket.API.Extensions;
+using CropMarket.Application;
 using CropMarket.Infrastructure;
 using CropMarket.Persistence;
 using System.Text.Json;
@@ -11,6 +12,7 @@ builder.Services.AddControllers()
     .AddJsonOptions(options =>
         options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter(JsonNamingPolicy.CamelCase, allowIntegerValues: false)));
 
+builder.Services.AddApplication();
 builder.Services.AddPersistence(builder.Configuration.GetConnectionString("DefaultConnection")!);
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddJwtAuthentication(builder.Configuration);

@@ -1,16 +1,18 @@
-﻿using CropMarket.Application.Auth;
+﻿using CropMarket.Application.Common.Interfaces;
+using CropMarket.Application.Features.Auth.Dtos;
+using CropMarket.Application.Features.Auth.Requests;
 using CropMarket.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
-namespace CropMarket.Persistence.Services;
+namespace CropMarket.Application.Features.Auth;
 
 public class AuthService : IAuthService
 {
-    private readonly AppDbContext _context;
+    private readonly IAppDbContext _context;
     private readonly IPasswordHasher _passwordHasher;
     private readonly ITokenService _tokenService;
 
-    public AuthService(AppDbContext context, IPasswordHasher passwordHasher, ITokenService tokenService)
+    public AuthService(IAppDbContext context, IPasswordHasher passwordHasher, ITokenService tokenService)
     {
         _context = context;
         _passwordHasher = passwordHasher;

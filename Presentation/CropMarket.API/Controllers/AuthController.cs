@@ -1,4 +1,6 @@
-﻿using CropMarket.Application.Auth;
+﻿using CropMarket.Application.Features.Auth;
+using CropMarket.Application.Features.Auth.Dtos;
+using CropMarket.Application.Features.Auth.Requests;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CropMarket.API.Controllers;

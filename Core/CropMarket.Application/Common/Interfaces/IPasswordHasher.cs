@@ -1,4 +1,4 @@
-﻿namespace CropMarket.Application.Auth;
+﻿namespace CropMarket.Application.Common.Interfaces;
 
 public interface IPasswordHasher
 {

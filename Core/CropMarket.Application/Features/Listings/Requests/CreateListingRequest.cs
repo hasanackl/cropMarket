@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using CropMarket.Domain.Enums;
 
-namespace CropMarket.Application.Listings;
+namespace CropMarket.Application.Features.Listings.Requests;
 
 public record CreateListingRequest(
     [Required, MaxLength(100)] string ProductName,

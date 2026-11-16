@@ -1,4 +1,4 @@
-﻿using CropMarket.Application.Auth;
+﻿using CropMarket.Application.Common.Interfaces;
 
 namespace CropMarket.Infrastructure.Security;
 

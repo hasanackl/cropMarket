@@ -1,6 +1,6 @@
 ﻿using CropMarket.Domain.Enums;
 
-namespace CropMarket.Application.Listings;
+namespace CropMarket.Application.Features.Listings.Dtos;
 
 public record ListingDto(
     int Id,
