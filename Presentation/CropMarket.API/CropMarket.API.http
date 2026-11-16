@@ -95,3 +95,463 @@ Content-Type: application/json
   "availableQuantity": 0,
   "location": "İzmir"
 }
+
+### 10. Farmer creates a listing for the order tests (50 kg) -> 201
+# @name orderListing
+POST {{host}}/api/listings
+Authorization: Bearer {{farmerLogin.response.body.$.token}}
+Content-Type: application/json
+{
+  
+"productName": "Cucumber",
+  
+"category": "vegetables",
+  
+"unitPrice": 20.00,
+  
+"unit": "kg",
+  
+"availableQuantity": 50,
+  
+"location": "İzmir"
+}
+### 11. Consumer orders 10 kg (FR-04, FR-05) -> 201, remainingQuantity 40
+POST {{host}}/api/orders
+Authorization: Bearer {{consumerLogin.response.body.$.token}}
+Content-Type: application/json
+{
+  
+"listingId": {{orderListing.response.body.$.id}},
+  
+"quantity": 10,
+  
+"deliveryAddress": "Bakirkoy, Istanbul"
+}
+
+### 12. Quantity 0 (NFR-02) -> 400
+POST {{host}}/api/orders
+Authorization: Bearer {{consumerLogin.response.body.$.token}}
+Content-Type: application/json
+{
+  
+"listingId": {{orderListing.response.body.$.id}},
+  
+"quantity": 0,
+  
+"deliveryAddress": "Bakirkoy, Istanbul"
+}
+
+### 13. Quantity -1 (NFR-02) -> 400
+POST {{host}}/api/orders
+Authorization: Bearer {{consumerLogin.response.body.$.token}}
+Content-Type: application/json
+{
+  
+"listingId": {{orderListing.response.body.$.id}},
+  
+"quantity": -1,
+  
+"deliveryAddress": "Bakirkoy, Istanbul"
+}
+
+
+### 14. More than the stock: 41 kg when 40 kg is left (NFR-02) -> 400, stock stays 40
+POST {{host}}/api/orders
+Authorization: Bearer {{consumerLogin.response.body.$.token}}
+Content-Type: application/json
+{
+  
+"listingId": {{orderListing.response.body.$.id}},
+  
+"quantity": 41,
+  
+"deliveryAddress": "Bakirkoy, Istanbul"
+}
+
+### 15. Farmer tries to place an order (NFR-03) -> 403
+POST {{host}}/api/orders
+Authorization: Bearer {{farmerLogin.response.body.$.token}}
+Content-Type: application/json
+{
+  
+"listingId": {{orderListing.response.body.$.id}},
+  
+"quantity": 1,
+  
+"deliveryAddress": "Bakirkoy, Istanbul"
+}
+
+### 16. Order without logging in -> 401
+POST {{host}}/api/orders
+Content-Type: application/json
+{
+  
+"listingId": {{orderListing.response.body.$.id}},
+  
+"quantity": 1,
+  
+"deliveryAddress": "Bakirkoy, Istanbul"
+}
+
+### 17. Listing that does not exist -> 404
+POST {{host}}/api/orders
+Authorization: Bearer {{consumerLogin.response.body.$.token}}
+Content-Type: application/json
+{
+  
+"listingId": 99999,
+  
+"quantity": 1,
+  
+"deliveryAddress": "Bakirkoy, Istanbul"
+}
+
+### 18. Check the stock after the tests -> availableQuantity 40
+GET {{host}}/api/listings/{{orderListing.response.body.$.id}}
+
+### 19. Consumer places a new order for the status tests -> 201
+# @name newOrder
+POST {{host}}/api/orders
+Authorization: Bearer {{consumerLogin.response.body.$.token}}
+Content-Type: application/json
+
+{
+  "listingId": {{orderListing.response.body.$.id}},
+  "quantity": 2,
+  "deliveryAddress": "Kadikoy, Istanbul"
+}
+
+### 20. Consumer sees own orders -> 200, newest first, status "pending"
+GET {{host}}/api/orders/mine
+Authorization: Bearer {{consumerLogin.response.body.$.token}}
+
+### 21. Farmer sees received orders (FR-06) -> 200
+GET {{host}}/api/orders/received
+Authorization: Bearer {{farmerLogin.response.body.$.token}}
+
+
+### 22. Farmer moves the order to Preparing (FR-06) -> 200
+PATCH {{host}}/api/orders/{{newOrder.response.body.$.id}}/status
+Authorization: Bearer {{farmerLogin.response.body.$.token}}
+Content-Type: application/json
+
+{
+  "status": "preparing"
+}
+
+### 23. Farmer moves it back to Pending -> 400 (status only moves forward)
+PATCH {{host}}/api/orders/{{newOrder.response.body.$.id}}/status
+Authorization: Bearer {{farmerLogin.response.body.$.token}}
+Content-Type: application/json
+
+{
+  "status": "pending"
+}
+
+### 24. Consumer tries to change the status (NFR-03) -> 403
+PATCH {{host}}/api/orders/{{newOrder.response.body.$.id}}/status
+Authorization: Bearer {{consumerLogin.response.body.$.token}}
+Content-Type: application/json
+
+{
+  "status": "delivered"
+}
+
+### 25. Register a second farmer -> 200 (409 if it already exists)
+POST {{host}}/api/auth/register
+Content-Type: application/json
+
+{
+  "fullName": "Mehmet Kaya",
+  "email": "mehmet@example.com",
+  "password": "Passw0rd!",
+  "role": "farmer"
+}
+
+### 26. Log in as the second farmer
+# @name otherFarmerLogin
+POST {{host}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "mehmet@example.com",
+  "password": "Passw0rd!"
+}
+
+### 27. Second farmer tries to change Ali's order (NFR-03) -> 403
+PATCH {{host}}/api/orders/{{newOrder.response.body.$.id}}/status
+Authorization: Bearer {{otherFarmerLogin.response.body.$.token}}
+Content-Type: application/json
+
+{
+  "status": "delivered"
+}
+
+### 28. Farmer marks the order as Delivered (FR-06) -> 200
+PATCH {{host}}/api/orders/{{newOrder.response.body.$.id}}/status
+Authorization: Bearer {{farmerLogin.response.body.$.token}}
+Content-Type: application/json
+
+{
+  "status": "delivered"
+}
+
+### 29. Consumer checks again -> the order is now "delivered"
+GET {{host}}/api/orders/mine
+Authorization: Bearer {{consumerLogin.response.body.$.token}}
+
+### 30. Farmer's own listings with order counts -> 200
+GET {{host}}/api/listings/mine
+Authorization: Bearer {{farmerLogin.response.body.$.token}}
+
+
+### 31. Consumer places a new 5 kg order to edit and cancel -> 201
+# @name editOrder
+POST {{host}}/api/orders
+Authorization: Bearer {{consumerLogin.response.body.$.token}}
+Content-Type: application/json
+
+{
+  "listingId": {{orderListing.response.body.$.id}},
+  "quantity": 5,
+  "deliveryAddress": "Bakirkoy, Istanbul"
+}
+
+
+
+
+
+
+### 32. Consumer changes the order to 8 kg and a new address (FR-07) -> 200, stock 3 kg lower
+PUT {{host}}/api/orders/{{editOrder.response.body.$.id}}
+Authorization: Bearer {{consumerLogin.response.body.$.token}}
+Content-Type: application/json
+
+{
+  "quantity": 8,
+  "deliveryAddress": "Kadikoy, Istanbul"
+}
+
+### 33. Edit with quantity 0 (NFR-02) -> 400
+PUT {{host}}/api/orders/{{editOrder.response.body.$.id}}
+Authorization: Bearer {{consumerLogin.response.body.$.token}}
+Content-Type: application/json
+
+{
+  "quantity": 0,
+  "deliveryAddress": "Kadikoy, Istanbul"
+}
+
+### 34. Farmer: number of new orders (FR-09) -> 200, 1 or more
+GET {{host}}/api/orders/received/unseen-count
+Authorization: Bearer {{farmerLogin.response.body.$.token}}
+
+### 35. Farmer: newest unseen orders (max 5) -> 200
+GET {{host}}/api/orders/received/unseen
+Authorization: Bearer {{farmerLogin.response.body.$.token}}
+
+### 36. Farmer opens the bell -> 204
+POST {{host}}/api/orders/received/mark-seen
+Authorization: Bearer {{farmerLogin.response.body.$.token}}
+
+### 37. Count again -> 200, 0
+GET {{host}}/api/orders/received/unseen-count
+Authorization: Bearer {{farmerLogin.response.body.$.token}}
+
+### 38. Consumer cancels the order (FR-08) -> 200, status "cancelled", 8 kg back to stock
+PATCH {{host}}/api/orders/{{editOrder.response.body.$.id}}/cancel
+Authorization: Bearer {{consumerLogin.response.body.$.token}}
+
+### 39. Cancel the same order again -> 409
+PATCH {{host}}/api/orders/{{editOrder.response.body.$.id}}/cancel
+Authorization: Bearer {{consumerLogin.response.body.$.token}}
+
+### 40. Edit a cancelled order -> 409
+PUT {{host}}/api/orders/{{editOrder.response.body.$.id}}
+Authorization: Bearer {{consumerLogin.response.body.$.token}}
+Content-Type: application/json
+
+{
+  "quantity": 8,
+  "deliveryAddress": "Kadikoy, Istanbul"
+}
+
+### 41. Farmer tries to move a cancelled order to Preparing -> 400
+PATCH {{host}}/api/orders/{{editOrder.response.body.$.id}}/status
+Authorization: Bearer {{farmerLogin.response.body.$.token}}
+Content-Type: application/json
+
+{
+  "status": "preparing"
+}
+
+### 42. Check the stock is back -> availableQuantity same as before test 31
+GET {{host}}/api/listings/{{orderListing.response.body.$.id}}
+
+
+### 43. City list from the database (FR-11) -> 200, 81 cities
+GET {{host}}/api/cities
+
+### 44. Farmer opens the edit form of an own listing (FR-10) -> 200
+GET {{host}}/api/listings/{{orderListing.response.body.$.id}}/edit
+Authorization: Bearer {{farmerLogin.response.body.$.token}}
+
+### 45. Farmer changes price, stock and city (FR-10) -> 200
+PUT {{host}}/api/listings/{{orderListing.response.body.$.id}}
+Authorization: Bearer {{farmerLogin.response.body.$.token}}
+Content-Type: application/json
+
+{
+  "productName": "Cucumber",
+  "category": "vegetables",
+  "unitPrice": 22.50,
+  "unit": "kg",
+  "availableQuantity": 60,
+  "location": "Manisa"
+}
+
+### 46. City that is not in the list -> 400
+PUT {{host}}/api/listings/{{orderListing.response.body.$.id}}
+Authorization: Bearer {{farmerLogin.response.body.$.token}}
+Content-Type: application/json
+
+{
+  "productName": "Cucumber",
+  "category": "vegetables",
+  "unitPrice": 22.50,
+  "unit": "kg",
+  "availableQuantity": 60,
+  "location": "Atlantis"
+}
+
+### 47. Category that is not in the fixed list -> 400
+PUT {{host}}/api/listings/{{orderListing.response.body.$.id}}
+Authorization: Bearer {{farmerLogin.response.body.$.token}}
+Content-Type: application/json
+
+{
+  "productName": "Cucumber",
+  "category": "meat",
+  "unitPrice": 22.50,
+  "unit": "kg",
+  "availableQuantity": 60,
+  "location": "Manisa"
+}
+
+### 48. Change the unit of a listing that already has orders -> 400
+PUT {{host}}/api/listings/{{orderListing.response.body.$.id}}
+Authorization: Bearer {{farmerLogin.response.body.$.token}}
+Content-Type: application/json
+
+{
+  "productName": "Cucumber",
+  "category": "vegetables",
+  "unitPrice": 22.50,
+  "unit": "box",
+  "availableQuantity": 60,
+  "location": "Manisa"
+}
+
+### 49. Consumer tries to open the edit form (NFR-03) -> 403
+GET {{host}}/api/listings/{{orderListing.response.body.$.id}}/edit
+Authorization: Bearer {{consumerLogin.response.body.$.token}}
+
+### 50. Upload a text file as the photo (FR-12) -> 400
+PUT {{host}}/api/listings/{{orderListing.response.body.$.id}}/image
+Authorization: Bearer {{farmerLogin.response.body.$.token}}
+Content-Type: multipart/form-data; boundary=CropBoundary
+
+--CropBoundary
+Content-Disposition: form-data; name="image"; filename="notes.txt"
+Content-Type: text/plain
+
+this is not a photo
+--CropBoundary--
+
+
+### 51. Change password without a token -> 401
+POST {{host}}/api/auth/change-password
+Content-Type: application/json
+
+{
+  "currentPassword": "Passw0rd!",
+  "newPassword": "NewPassw0rd!"
+}
+
+### 52. Wrong current password (FR-13) -> 400
+POST {{host}}/api/auth/change-password
+Authorization: Bearer {{consumerLogin.response.body.$.token}}
+Content-Type: application/json
+
+{
+  "currentPassword": "wrong-password",
+  "newPassword": "NewPassw0rd!"
+}
+
+### 53. New password shorter than 8 characters -> 400
+POST {{host}}/api/auth/change-password
+Authorization: Bearer {{consumerLogin.response.body.$.token}}
+Content-Type: application/json
+
+{
+  "currentPassword": "Passw0rd!",
+  "newPassword": "short"
+}
+
+### 54. Correct current password (FR-13) -> 204
+POST {{host}}/api/auth/change-password
+Authorization: Bearer {{consumerLogin.response.body.$.token}}
+Content-Type: application/json
+
+{
+  "currentPassword": "Passw0rd!",
+  "newPassword": "NewPassw0rd!"
+}
+
+### 55. Log in with the new password -> 200
+POST {{host}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "ayse@example.com",
+  "password": "NewPassw0rd!"
+}
+
+### 56. Put the old password back, so tests 1-50 keep working -> 204
+POST {{host}}/api/auth/change-password
+Authorization: Bearer {{consumerLogin.response.body.$.token}}
+Content-Type: application/json
+
+{
+  "currentPassword": "NewPassw0rd!",
+  "newPassword": "Passw0rd!"
+}
+
+
+### 57. Order without a token -> 401, body is now ProblemDetails (status, title)
+POST {{host}}/api/orders
+Content-Type: application/json
+
+{
+  "listingId": 1,
+  "quantity": 1,
+  "deliveryAddress": "Bakirkoy, Istanbul"
+}
+
+### 58. Register an email that already exists -> 409 ProblemDetails
+POST {{host}}/api/auth/register
+Content-Type: application/json
+
+{
+  "fullName": "Ali Yilmaz",
+  "email": "ali@example.com",
+  "password": "Passw0rd!",
+  "role": "farmer"
+}
+
+### 59. Consumer asks for the farmer's received orders -> 403 ProblemDetails
+GET {{host}}/api/orders/received
+Authorization: Bearer {{consumerLogin.response.body.$.token}}
+
+### 60. Listing that does not exist -> 404 ProblemDetails
+GET {{host}}/api/listings/999999

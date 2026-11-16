@@ -1,4 +1,4 @@
-﻿using CropMarket.Application.Auth;
+﻿using CropMarket.Application.Common.Interfaces;
 using CropMarket.Infrastructure.Security;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

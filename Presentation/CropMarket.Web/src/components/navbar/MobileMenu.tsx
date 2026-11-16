@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faXmark } from '@fortawesome/free-solid-svg-icons'
+import { faXmark, faGear } from '@fortawesome/free-solid-svg-icons'
 import type { Role } from '../../types'
 import { navLinks } from '../../constants/navLinks'
 import { useTranslation } from 'react-i18next'
@@ -69,6 +69,11 @@ function handleLogout() {
                 {t('nav.newListing')}
               </Link>
             )}
+
+            <Link to="/settings" onClick={onClose} className="mt-3 block rounded-xl border-2 border-gray-200 py-2 text-center font-semibold text-gray-700">
+              <FontAwesomeIcon icon={faGear} className="mr-2" />
+              {t('nav.settings')}
+            </Link>
 
             <button onClick={handleLogout} className="mt-3 w-full rounded-xl border-2 border-brand-300 py-2 font-semibold text-brand-700">
               {t('nav.logout')}

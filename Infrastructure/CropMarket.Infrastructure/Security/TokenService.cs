@@ -1,6 +1,6 @@
 ﻿using System.Security.Claims;
 using System.Text;
-using CropMarket.Application.Auth;
+using CropMarket.Application.Common.Interfaces;
 using CropMarket.Domain.Entities;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.JsonWebTokens;

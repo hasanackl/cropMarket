@@ -1,12 +1,14 @@
 import { useTranslation } from 'react-i18next'
-import { cities } from '../../constants/cities'
+import type { City } from '../../types'
 
 type CitySelectProps = {
+  cities: City[]
   value: string
   onChange: (value: string) => void
 }
 
-function CitySelect({ value, onChange }: CitySelectProps) {
+// The listing stores the city name, so the option value is the name (FR-11)
+function CitySelect({ cities, value, onChange }: CitySelectProps) {
   const { t } = useTranslation()
 
   return (
@@ -21,8 +23,8 @@ function CitySelect({ value, onChange }: CitySelectProps) {
           {t('newListing.selectCity')}
         </option>
         {cities.map((city) => (
-          <option key={city} value={city}>
-            {city}
+          <option key={city.id} value={city.name}>
+            {city.name}
           </option>
         ))}
       </select>

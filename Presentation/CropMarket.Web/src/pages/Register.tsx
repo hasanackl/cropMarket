@@ -8,8 +8,7 @@ import AuthLayout from '../components/auth/AuthLayout'
 import FormField from '../components/auth/FormField'
 import RoleCard from '../components/auth/RoleCard'
 import { faBasketShopping, faTractor } from '@fortawesome/free-solid-svg-icons'
-
-const MIN_PASSWORD_LENGTH = 8
+import { MIN_PASSWORD_LENGTH } from '../constants/password'
 
 function Register() {
   const [role, setRole] = useState<UserRole>('consumer')

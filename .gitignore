@@ -426,3 +426,7 @@ FodyWeavers.xsd
 
 # Official VS Code C# Dev Kit Extension exclusion
 #*.lscache
+
+# Listing photos uploaded while testing (FR-12)
+Presentation/CropMarket.API/wwwroot/uploads/*
+!Presentation/CropMarket.API/wwwroot/uploads/.gitkeep

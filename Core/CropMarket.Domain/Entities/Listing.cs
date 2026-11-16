@@ -1,4 +1,4 @@
-﻿using CropMarket.Domain.Common;
+using CropMarket.Domain.Common;
 using CropMarket.Domain.Enums;
 
 namespace CropMarket.Domain.Entities;
@@ -16,6 +16,10 @@ public class Listing : BaseEntity
     public string Location { get; set; } = string.Empty;
     public bool IsActive { get; set; } = true;
 
+    // Path of the uploaded photo, e.g. /uploads/vegetables/abc.jpg; null shows the category icon (FR-12)
+    public string? ImageUrl { get; set; }
+
     // Concurrency token for the stock update in Week 5 (ADR-02)
     public byte[] RowVersion { get; set; } = [];
+    public ICollection<Order> Orders { get; set; } = [];
 }

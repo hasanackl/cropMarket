@@ -1,4 +1,5 @@
-import type { AuthUser, LoginRequest, RegisterRequest } from '../types'
+import type { AuthUser, ChangePasswordRequest, LoginRequest, RegisterRequest } from '../types'
+import { ApiError } from './ApiError'
 
 const API_URL = import.meta.env.VITE_API_URL
 
@@ -36,4 +37,20 @@ export async function registerUser(request: RegisterRequest): Promise<AuthUser |
   }
 
   return response.json()
+}
+
+// POST /api/auth/change-password (FR-13); a wrong current password answers 400
+export async function changePassword(request: ChangePasswordRequest, token: string): Promise<void> {
+  const response = await fetch(`${API_URL}/api/auth/change-password`, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify(request),
+  })
+
+  if (!response.ok) {
+    throw new ApiError(response.status)
+  }
 }

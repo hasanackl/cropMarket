@@ -1,4 +1,4 @@
-﻿using CropMarket.Domain.Entities;
+using CropMarket.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -14,6 +14,7 @@ public class ListingConfiguration : IEntityTypeConfiguration<Listing>
         builder.Property(l => l.Unit).HasConversion<string>().HasMaxLength(10);
         builder.Property(l => l.AvailableQuantity).HasPrecision(10, 2);
         builder.Property(l => l.Location).HasMaxLength(100);
+        builder.Property(l => l.ImageUrl).HasMaxLength(300);
         builder.Property(l => l.RowVersion).IsRowVersion();
 
         builder.HasOne(l => l.Farmer)

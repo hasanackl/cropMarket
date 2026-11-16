@@ -9,6 +9,7 @@ import { faBars } from '@fortawesome/free-solid-svg-icons'
 import { useTranslation } from 'react-i18next'
 import LanguageSwitcher from './LanguageSwitcher'
 import { NavLink } from 'react-router'
+import NotificationBell from './NotificationBell'
 
 type NavbarProps = {
   role: Role
@@ -45,6 +46,8 @@ function Navbar({ role, name = '' }: NavbarProps) {
 
         <div className="flex items-center gap-4">
           <LanguageSwitcher />
+          {/* FR-09: only farmers get new-order notifications */}
+          {role === 'farmer' && <NotificationBell />}
           <UserMenu role={role} name={name} />
 
           <button
