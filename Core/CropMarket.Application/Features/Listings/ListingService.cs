@@ -73,6 +73,27 @@ public class ListingService : IListingService
         return (await GetByIdAsync(listing.Id))!;
     }
 
+    // "My listings": all listings of this farmer, also the sold-out ones
+    public async Task<List<MyListingDto>> GetMineAsync(int farmerId)
+    {
+        return await _context.Listings
+            .Where(l => l.FarmerId == farmerId)
+            .OrderByDescending(l => l.CreatedAt)
+            .Select(l => new MyListingDto(
+                l.Id,
+                l.ProductName,
+                l.Category,
+                l.UnitPrice,
+                l.Unit,
+                l.AvailableQuantity,
+                l.Location,
+                l.IsActive,
+                l.Orders.Count,
+                l.CreatedAt))
+            .ToListAsync();
+    }
+
+
     private static readonly Expression<Func<Listing, ListingDto>> ToDto = l => new ListingDto(
         l.Id,
         l.ProductName,

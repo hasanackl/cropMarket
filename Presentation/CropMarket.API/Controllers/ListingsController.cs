@@ -52,4 +52,13 @@ public class ListingsController : ControllerBase
 
         return CreatedAtAction(nameof(GetById), new { id = listing.Id }, listing);
     }
+
+    // GET /api/listings/mine ("My listings"; farmers only)
+    [Authorize(Roles = "Farmer")]
+    [HttpGet("mine")]
+    public async Task<ActionResult<List<MyListingDto>>> GetMine()
+    {
+        var farmerId = int.Parse(User.FindFirstValue("sub")!);
+        return Ok(await _listingService.GetMineAsync(farmerId));
+    }
 }

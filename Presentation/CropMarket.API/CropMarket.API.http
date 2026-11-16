@@ -208,3 +208,98 @@ Content-Type: application/json
 
 ### 18. Check the stock after the tests -> availableQuantity 40
 GET {{host}}/api/listings/{{orderListing.response.body.$.id}}
+
+### 19. Consumer places a new order for the status tests -> 201
+# @name newOrder
+POST {{host}}/api/orders
+Authorization: Bearer {{consumerLogin.response.body.$.token}}
+Content-Type: application/json
+
+{
+  "listingId": {{orderListing.response.body.$.id}},
+  "quantity": 2,
+  "deliveryAddress": "Kadikoy, Istanbul"
+}
+
+### 20. Consumer sees own orders -> 200, newest first, status "pending"
+GET {{host}}/api/orders/mine
+Authorization: Bearer {{consumerLogin.response.body.$.token}}
+
+### 21. Farmer sees received orders (FR-06) -> 200
+GET {{host}}/api/orders/received
+Authorization: Bearer {{farmerLogin.response.body.$.token}}
+
+
+### 22. Farmer moves the order to Preparing (FR-06) -> 200
+PATCH {{host}}/api/orders/{{newOrder.response.body.$.id}}/status
+Authorization: Bearer {{farmerLogin.response.body.$.token}}
+Content-Type: application/json
+
+{
+  "status": "preparing"
+}
+
+### 23. Farmer moves it back to Pending -> 400 (status only moves forward)
+PATCH {{host}}/api/orders/{{newOrder.response.body.$.id}}/status
+Authorization: Bearer {{farmerLogin.response.body.$.token}}
+Content-Type: application/json
+
+{
+  "status": "pending"
+}
+
+### 24. Consumer tries to change the status (NFR-03) -> 403
+PATCH {{host}}/api/orders/{{newOrder.response.body.$.id}}/status
+Authorization: Bearer {{consumerLogin.response.body.$.token}}
+Content-Type: application/json
+
+{
+  "status": "delivered"
+}
+
+### 25. Register a second farmer -> 200 (409 if it already exists)
+POST {{host}}/api/auth/register
+Content-Type: application/json
+
+{
+  "fullName": "Mehmet Kaya",
+  "email": "mehmet@example.com",
+  "password": "Passw0rd!",
+  "role": "farmer"
+}
+
+### 26. Log in as the second farmer
+# @name otherFarmerLogin
+POST {{host}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "mehmet@example.com",
+  "password": "Passw0rd!"
+}
+
+### 27. Second farmer tries to change Ali's order (NFR-03) -> 403
+PATCH {{host}}/api/orders/{{newOrder.response.body.$.id}}/status
+Authorization: Bearer {{otherFarmerLogin.response.body.$.token}}
+Content-Type: application/json
+
+{
+  "status": "delivered"
+}
+
+### 28. Farmer marks the order as Delivered (FR-06) -> 200
+PATCH {{host}}/api/orders/{{newOrder.response.body.$.id}}/status
+Authorization: Bearer {{farmerLogin.response.body.$.token}}
+Content-Type: application/json
+
+{
+  "status": "delivered"
+}
+
+### 29. Consumer checks again -> the order is now "delivered"
+GET {{host}}/api/orders/mine
+Authorization: Bearer {{consumerLogin.response.body.$.token}}
+
+### 30. Farmer's own listings with order counts -> 200
+GET {{host}}/api/listings/mine
+Authorization: Bearer {{farmerLogin.response.body.$.token}}
