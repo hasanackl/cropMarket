@@ -18,4 +18,5 @@ public class Listing : BaseEntity
 
     // Concurrency token for the stock update in Week 5 (ADR-02)
     public byte[] RowVersion { get; set; } = [];
+    public ICollection<Order> Orders { get; set; } = [];
 }

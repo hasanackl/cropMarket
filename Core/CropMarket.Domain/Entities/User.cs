@@ -12,4 +12,5 @@ public class User : BaseEntity
     public Role Role { get; set; }
 
     public ICollection<Listing> Listings { get; set; } = [];
+    public ICollection<Order> Orders { get; set; } = [];
 }

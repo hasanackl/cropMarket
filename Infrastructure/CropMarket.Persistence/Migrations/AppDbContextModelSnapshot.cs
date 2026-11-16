@@ -80,6 +80,59 @@ namespace CropMarket.Persistence.Migrations
                     b.ToTable("Listings");
                 });
 
+            modelBuilder.Entity("CropMarket.Domain.Entities.Order", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("ConsumerId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("CreatedAt")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("DeliveryAddress")
+                        .IsRequired()
+                        .HasMaxLength(250)
+                        .HasColumnType("nvarchar(250)");
+
+                    b.Property<int>("ListingId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("PaymentMethod")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<decimal>("Quantity")
+                        .HasPrecision(10, 2)
+                        .HasColumnType("decimal(10,2)");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<decimal>("TotalPrice")
+                        .HasPrecision(12, 2)
+                        .HasColumnType("decimal(12,2)");
+
+                    b.Property<decimal>("UnitPriceAtOrder")
+                        .HasPrecision(10, 2)
+                        .HasColumnType("decimal(10,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ConsumerId");
+
+                    b.HasIndex("ListingId");
+
+                    b.ToTable("Orders");
+                });
+
             modelBuilder.Entity("CropMarket.Domain.Entities.User", b =>
                 {
                     b.Property<int>("Id")
@@ -134,9 +187,35 @@ namespace CropMarket.Persistence.Migrations
                     b.Navigation("Farmer");
                 });
 
+            modelBuilder.Entity("CropMarket.Domain.Entities.Order", b =>
+                {
+                    b.HasOne("CropMarket.Domain.Entities.User", "Consumer")
+                        .WithMany("Orders")
+                        .HasForeignKey("ConsumerId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("CropMarket.Domain.Entities.Listing", "Listing")
+                        .WithMany("Orders")
+                        .HasForeignKey("ListingId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Consumer");
+
+                    b.Navigation("Listing");
+                });
+
+            modelBuilder.Entity("CropMarket.Domain.Entities.Listing", b =>
+                {
+                    b.Navigation("Orders");
+                });
+
             modelBuilder.Entity("CropMarket.Domain.Entities.User", b =>
                 {
                     b.Navigation("Listings");
+
+                    b.Navigation("Orders");
                 });
 #pragma warning restore 612, 618
         }
