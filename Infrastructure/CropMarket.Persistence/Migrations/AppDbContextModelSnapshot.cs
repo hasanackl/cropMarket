@@ -99,6 +99,9 @@ namespace CropMarket.Persistence.Migrations
                         .HasMaxLength(250)
                         .HasColumnType("nvarchar(250)");
 
+                    b.Property<bool>("IsSeenByFarmer")
+                        .HasColumnType("bit");
+
                     b.Property<int>("ListingId")
                         .HasColumnType("int");
 

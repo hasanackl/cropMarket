@@ -1,8 +1,9 @@
-﻿namespace CropMarket.Domain.Enums;
+namespace CropMarket.Domain.Enums;
 
 public enum OrderStatus
 {
     Pending,
     Preparing,
-    Delivered
+    Delivered,
+    Cancelled
 }

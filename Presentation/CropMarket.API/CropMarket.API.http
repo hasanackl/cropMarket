@@ -303,3 +303,82 @@ Authorization: Bearer {{consumerLogin.response.body.$.token}}
 ### 30. Farmer's own listings with order counts -> 200
 GET {{host}}/api/listings/mine
 Authorization: Bearer {{farmerLogin.response.body.$.token}}
+
+
+### 31. Consumer places a new 5 kg order to edit and cancel -> 201
+# @name editOrder
+POST {{host}}/api/orders
+Authorization: Bearer {{consumerLogin.response.body.$.token}}
+Content-Type: application/json
+
+{
+  "listingId": {{orderListing.response.body.$.id}},
+  "quantity": 5,
+  "deliveryAddress": "Bakirkoy, Istanbul"
+}
+
+### 32. Consumer changes the order to 8 kg and a new address (FR-07) -> 200, stock 3 kg lower
+PUT {{host}}/api/orders/{{editOrder.response.body.$.id}}
+Authorization: Bearer {{consumerLogin.response.body.$.token}}
+Content-Type: application/json
+
+{
+  "quantity": 8,
+  "deliveryAddress": "Kadikoy, Istanbul"
+}
+
+### 33. Edit with quantity 0 (NFR-02) -> 400
+PUT {{host}}/api/orders/{{editOrder.response.body.$.id}}
+Authorization: Bearer {{consumerLogin.response.body.$.token}}
+Content-Type: application/json
+
+{
+  "quantity": 0,
+  "deliveryAddress": "Kadikoy, Istanbul"
+}
+
+### 34. Farmer: number of new orders (FR-09) -> 200, 1 or more
+GET {{host}}/api/orders/received/unseen-count
+Authorization: Bearer {{farmerLogin.response.body.$.token}}
+
+### 35. Farmer: newest unseen orders (max 5) -> 200
+GET {{host}}/api/orders/received/unseen
+Authorization: Bearer {{farmerLogin.response.body.$.token}}
+
+### 36. Farmer opens the bell -> 204
+POST {{host}}/api/orders/received/mark-seen
+Authorization: Bearer {{farmerLogin.response.body.$.token}}
+
+### 37. Count again -> 200, 0
+GET {{host}}/api/orders/received/unseen-count
+Authorization: Bearer {{farmerLogin.response.body.$.token}}
+
+### 38. Consumer cancels the order (FR-08) -> 200, status "cancelled", 8 kg back to stock
+PATCH {{host}}/api/orders/{{editOrder.response.body.$.id}}/cancel
+Authorization: Bearer {{consumerLogin.response.body.$.token}}
+
+### 39. Cancel the same order again -> 409
+PATCH {{host}}/api/orders/{{editOrder.response.body.$.id}}/cancel
+Authorization: Bearer {{consumerLogin.response.body.$.token}}
+
+### 40. Edit a cancelled order -> 409
+PUT {{host}}/api/orders/{{editOrder.response.body.$.id}}
+Authorization: Bearer {{consumerLogin.response.body.$.token}}
+Content-Type: application/json
+
+{
+  "quantity": 8,
+  "deliveryAddress": "Kadikoy, Istanbul"
+}
+
+### 41. Farmer tries to move a cancelled order to Preparing -> 400
+PATCH {{host}}/api/orders/{{editOrder.response.body.$.id}}/status
+Authorization: Bearer {{farmerLogin.response.body.$.token}}
+Content-Type: application/json
+
+{
+  "status": "preparing"
+}
+
+### 42. Check the stock is back -> availableQuantity same as before test 31
+GET {{host}}/api/listings/{{orderListing.response.body.$.id}}
