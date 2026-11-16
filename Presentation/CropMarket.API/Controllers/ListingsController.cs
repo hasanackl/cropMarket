@@ -1,4 +1,4 @@
-using System.Security.Claims;
+using CropMarket.API.Extensions;
 using CropMarket.API.Services;
 using CropMarket.Application.Features.Listings;
 using CropMarket.Application.Features.Listings.Dtos;
@@ -49,7 +49,7 @@ public class ListingsController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<ListingDto>> Create(CreateListingRequest request)
     {
-        var result = await _listingService.CreateAsync(GetUserId(), request);
+        var result = await _listingService.CreateAsync(User.GetUserId(), request);
 
         if (!result.IsSuccess)
         {
@@ -64,7 +64,7 @@ public class ListingsController : ControllerBase
     [HttpGet("mine")]
     public async Task<ActionResult<List<MyListingDto>>> GetMine()
     {
-        return Ok(await _listingService.GetMineAsync(GetUserId()));
+        return Ok(await _listingService.GetMineAsync(User.GetUserId()));
     }
 
     // GET /api/listings/5/edit (FR-10): current values for the edit form
@@ -72,7 +72,7 @@ public class ListingsController : ControllerBase
     [HttpGet("{id:int}/edit")]
     public async Task<ActionResult<EditListingDto>> GetForEdit(int id)
     {
-        var listing = await _listingService.GetForEditAsync(GetUserId(), id);
+        var listing = await _listingService.GetForEditAsync(User.GetUserId(), id);
 
         if (listing is null)
         {
@@ -87,7 +87,7 @@ public class ListingsController : ControllerBase
     [HttpPut("{id:int}")]
     public async Task<ActionResult<ListingDto>> Update(int id, UpdateListingRequest request)
     {
-        var result = await _listingService.UpdateAsync(GetUserId(), id, request);
+        var result = await _listingService.UpdateAsync(User.GetUserId(), id, request);
 
         if (!result.IsSuccess)
         {
@@ -102,7 +102,7 @@ public class ListingsController : ControllerBase
     [HttpPut("{id:int}/image")]
     public async Task<ActionResult<ListingDto>> UploadImage(int id, IFormFile image)
     {
-        var farmerId = GetUserId();
+        var farmerId = User.GetUserId();
         var current = await _listingService.GetForEditAsync(farmerId, id);
 
         if (current is null)
@@ -147,7 +147,4 @@ public class ListingsController : ControllerBase
 
         return Problem(title: title, detail: result.Message, statusCode: statusCode);
     }
-
-    // The user id comes from the token, never from the request body
-    private int GetUserId() => int.Parse(User.FindFirstValue("sub")!);
 }

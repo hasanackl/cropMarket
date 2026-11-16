@@ -317,6 +317,11 @@ Content-Type: application/json
   "deliveryAddress": "Bakirkoy, Istanbul"
 }
 
+
+
+
+
+
 ### 32. Consumer changes the order to 8 kg and a new address (FR-07) -> 200, stock 3 kg lower
 PUT {{host}}/api/orders/{{editOrder.response.body.$.id}}
 Authorization: Bearer {{consumerLogin.response.body.$.token}}
@@ -521,3 +526,32 @@ Content-Type: application/json
   "currentPassword": "NewPassw0rd!",
   "newPassword": "Passw0rd!"
 }
+
+
+### 57. Order without a token -> 401, body is now ProblemDetails (status, title)
+POST {{host}}/api/orders
+Content-Type: application/json
+
+{
+  "listingId": 1,
+  "quantity": 1,
+  "deliveryAddress": "Bakirkoy, Istanbul"
+}
+
+### 58. Register an email that already exists -> 409 ProblemDetails
+POST {{host}}/api/auth/register
+Content-Type: application/json
+
+{
+  "fullName": "Ali Yilmaz",
+  "email": "ali@example.com",
+  "password": "Passw0rd!",
+  "role": "farmer"
+}
+
+### 59. Consumer asks for the farmer's received orders -> 403 ProblemDetails
+GET {{host}}/api/orders/received
+Authorization: Bearer {{consumerLogin.response.body.$.token}}
+
+### 60. Listing that does not exist -> 404 ProblemDetails
+GET {{host}}/api/listings/999999

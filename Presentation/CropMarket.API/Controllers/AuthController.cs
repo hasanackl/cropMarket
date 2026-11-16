@@ -1,4 +1,4 @@
-using System.Security.Claims;
+using CropMarket.API.Extensions;
 using CropMarket.Application.Features.Auth;
 using CropMarket.Application.Features.Auth.Dtos;
 using CropMarket.Application.Features.Auth.Requests;
@@ -26,7 +26,9 @@ public class AuthController : ControllerBase
 
         if (response is null)
         {
-            return Conflict(new { message = "This email is already registered." });
+            return Problem(title: "The account could not be created.",
+                detail: "This email is already registered.",
+                statusCode: StatusCodes.Status409Conflict);
         }
 
         return Ok(response);
@@ -40,7 +42,9 @@ public class AuthController : ControllerBase
 
         if (response is null)
         {
-            return Unauthorized(new { message = "Email or password is incorrect." });
+            return Problem(title: "Login failed.",
+                detail: "Email or password is incorrect.",
+                statusCode: StatusCodes.Status401Unauthorized);
         }
 
         return Ok(response);
@@ -51,8 +55,7 @@ public class AuthController : ControllerBase
     [HttpPost("change-password")]
     public async Task<IActionResult> ChangePassword(ChangePasswordRequest request)
     {
-        var userId = int.Parse(User.FindFirstValue("sub")!);
-        var isChanged = await _authService.ChangePasswordAsync(userId, request);
+        var isChanged = await _authService.ChangePasswordAsync(User.GetUserId(), request);
 
         // 400, not 401: a wrong password here must not log the user out
         if (!isChanged)

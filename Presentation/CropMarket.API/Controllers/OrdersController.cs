@@ -1,4 +1,4 @@
-using System.Security.Claims;
+using CropMarket.API.Extensions;
 using CropMarket.Application.Features.Orders;
 using CropMarket.Application.Features.Orders.Dtos;
 using CropMarket.Application.Features.Orders.Requests;
@@ -26,7 +26,7 @@ public class OrdersController : ControllerBase
     [HttpPost]
     public async Task<ActionResult<OrderDto>> Create(CreateOrderRequest request)
     {
-        var result = await _orderService.CreateAsync(GetUserId(), request);
+        var result = await _orderService.CreateAsync(User.GetUserId(), request);
 
         if (!result.IsSuccess)
         {
@@ -48,7 +48,7 @@ public class OrdersController : ControllerBase
     [HttpGet("mine")]
     public async Task<ActionResult<List<MyOrderDto>>> GetMine()
     {
-        return Ok(await _orderService.GetMineAsync(GetUserId()));
+        return Ok(await _orderService.GetMineAsync(User.GetUserId()));
     }
 
     // PUT /api/orders/5 (FR-07)
@@ -56,7 +56,7 @@ public class OrdersController : ControllerBase
     [HttpPut("{id:int}")]
     public async Task<ActionResult<MyOrderDto>> Update(int id, UpdateOrderRequest request)
     {
-        var result = await _orderService.UpdateAsync(GetUserId(), id, request);
+        var result = await _orderService.UpdateAsync(User.GetUserId(), id, request);
 
         if (!result.IsSuccess)
         {
@@ -78,7 +78,7 @@ public class OrdersController : ControllerBase
     [HttpPatch("{id:int}/cancel")]
     public async Task<ActionResult<MyOrderDto>> Cancel(int id)
     {
-        var result = await _orderService.CancelAsync(GetUserId(), id);
+        var result = await _orderService.CancelAsync(User.GetUserId(), id);
 
         if (!result.IsSuccess)
         {
@@ -99,7 +99,7 @@ public class OrdersController : ControllerBase
     [HttpGet("received")]
     public async Task<ActionResult<List<ReceivedOrderDto>>> GetReceived()
     {
-        return Ok(await _orderService.GetReceivedAsync(GetUserId()));
+        return Ok(await _orderService.GetReceivedAsync(User.GetUserId()));
     }
 
     // PATCH /api/orders/5/status (FR-06, NFR-03)
@@ -107,7 +107,7 @@ public class OrdersController : ControllerBase
     [HttpPatch("{id:int}/status")]
     public async Task<ActionResult<ReceivedOrderDto>> UpdateStatus(int id, UpdateOrderStatusRequest request)
     {
-        var result = await _orderService.UpdateStatusAsync(GetUserId(), id, request);
+        var result = await _orderService.UpdateStatusAsync(User.GetUserId(), id, request);
 
         if (!result.IsSuccess)
         {
@@ -129,7 +129,7 @@ public class OrdersController : ControllerBase
     [HttpGet("received/unseen-count")]
     public async Task<ActionResult<int>> GetUnseenCount()
     {
-        return Ok(await _orderService.GetUnseenCountAsync(GetUserId()));
+        return Ok(await _orderService.GetUnseenCountAsync(User.GetUserId()));
     }
 
     // GET /api/orders/received/unseen (FR-09)
@@ -137,7 +137,7 @@ public class OrdersController : ControllerBase
     [HttpGet("received/unseen")]
     public async Task<ActionResult<List<ReceivedOrderDto>>> GetUnseen()
     {
-        return Ok(await _orderService.GetUnseenAsync(GetUserId()));
+        return Ok(await _orderService.GetUnseenAsync(User.GetUserId()));
     }
 
     // POST /api/orders/received/mark-seen (FR-09)
@@ -145,10 +145,7 @@ public class OrdersController : ControllerBase
     [HttpPost("received/mark-seen")]
     public async Task<IActionResult> MarkSeen()
     {
-        await _orderService.MarkSeenAsync(GetUserId());
+        await _orderService.MarkSeenAsync(User.GetUserId());
         return NoContent();
     }
-
-    // The user id comes from the token, never from the request body
-    private int GetUserId() => int.Parse(User.FindFirstValue("sub")!);
 }
