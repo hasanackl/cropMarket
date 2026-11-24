@@ -12,7 +12,8 @@ public class TestDatabase : IDisposable
     public const string DefaultConnectionString =
         "Server=(localdb)\\MSSQLLocalDB;Database=CropMarketTestDb;Trusted_Connection=True;TrustServerCertificate=True";
 
-    public string ConnectionString { get; } =
+    // Static, so the API tests (ApiFactory) use the same database
+    public static string ConnectionString { get; } =
         Environment.GetEnvironmentVariable("CROPMARKET_TEST_DB") ?? DefaultConnectionString;
 
     public TestDatabase()
@@ -38,9 +39,10 @@ public class TestDatabase : IDisposable
     }
 }
 
-// All test classes that use the database run one after another, never in parallel
+// All test classes (service, API and performance) share one database, so they are in one collection:
+// xUnit runs them one after another and creates the database and the API only once per run
 [CollectionDefinition(Name)]
-public class DatabaseCollection : ICollectionFixture<TestDatabase>
+public class DatabaseCollection : ICollectionFixture<TestDatabase>, ICollectionFixture<ApiFactory>
 {
     public const string Name = "Database";
 }
