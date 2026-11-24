@@ -1,0 +1,12 @@
+Week 6 - boundary tests BEFORE the fix (Hasan's PC, LocalDB, 2026-11-24 15:59 Europe/Istanbul)
+TRX: Tests\CropMarket.Tests\TestResults\week6-boundary-before-fix.trx
+Test özeti: toplam: 3; başarısız: 3; başarılı: 0
+
+TC33 (quantityText: "10.555") [FAIL]  Expected: InvalidQuantity  Actual: null
+  quantity 10.555: error = none, stock after = 39,45, saved order quantities = [10,56]
+TC33 (quantityText: "0.001") [FAIL]   Expected: InvalidQuantity  Actual: null
+  quantity 0.001: error = none, stock after = 50,00, saved order quantities = [0,00]
+TC34 [FAIL]  Expected: [200, 409]  Actual: [200, 500]
+  Status codes: 200, 500
+  SqlException 2601: Cannot insert duplicate key row in object 'dbo.Users' with unique index 'IX_Users_Email'
+  GlobalExceptionHandler: Unhandled exception on /api/auth/register (AuthService.cs line 41)

@@ -38,7 +38,23 @@ public class AuthService : IAuthService
         };
 
         _context.Users.Add(user);
-        await _context.SaveChangesAsync();
+
+        try
+        {
+            await _context.SaveChangesAsync();
+        }
+        catch (DbUpdateException)
+        {
+            // Two sign-ups with the same email at the same moment (e.g. a double click): both pass the
+            // AnyAsync check above, but the unique index on Email lets only one insert through.
+            // The second one is "email already registered" (409), not a server error (found by TC34 in Week 6).
+            if (await EmailTakenAsync(user, email))
+            {
+                return null;
+            }
+
+            throw;
+        }
 
         return ToResponse(user);
     }
@@ -71,6 +87,13 @@ public class AuthService : IAuthService
         await _context.SaveChangesAsync();
 
         return true;
+    }
+
+    // Called only after a failed insert: forget the new row and check whether the email now exists
+    private async Task<bool> EmailTakenAsync(User user, string email)
+    {
+        _context.Users.Entry(user).State = EntityState.Detached;
+        return await _context.Users.AnyAsync(u => u.Email == email);
     }
 
     private AuthResponse ToResponse(User user)

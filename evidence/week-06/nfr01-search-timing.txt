@@ -1,0 +1,4 @@
+NFR-01 search timing, 1000 seeded listings, 20 requests each, 2026-11-24 16:16
+/api/listings -> rows 1005, avg 27,7 ms, p95 38,7 ms, max 43,9 ms
+/api/listings?search=tomato -> rows 129, avg 10,3 ms, p95 15,3 ms, max 18,5 ms
+/api/listings?category=fruits&location=Manisa -> rows 50, avg 10,6 ms, p95 13,8 ms, max 32,6 ms

@@ -76,6 +76,8 @@ Infrastructure/
 Presentation/
   CropMarket.API/             controllers, error handling, image storage, Program.cs, CropMarket.API.http
   CropMarket.Web/             React + TypeScript client
+Tests/
+  CropMarket.Tests/           xUnit tests: Services/, Api/, Performance/, Robustness/
 ```
 
 ## Running the Project
@@ -108,19 +110,39 @@ Open http://localhost:5173. The API address is set in `Presentation/CropMarket.W
 Uploaded listing photos are saved in `Presentation/CropMarket.API/wwwroot/uploads/` and are not added to Git.
 The allowed web address for CORS is set in `Cors:AllowedOrigins` in `appsettings.json`.
 
+## Testing
+
+The test project `Tests/CropMarket.Tests` (xUnit) contains 34 test methods (39 cases):
+
+* **Service tests** for the business rules of `AuthService`, `ListingService` and `OrderService`
+* **API integration tests** with `WebApplicationFactory`: 401, 403, ProblemDetails, the complete order flow
+* **Concurrency tests** for the RowVersion check on the stock
+* **NFR-01 measurement:** search with 1,000 extra listings
+* **Boundary tests** that found two defects (fixed in Week 6)
+
+The tests use their own SQL Server LocalDB database `CropMarketTestDb`, which is created from the migrations at the start of every run.
+
+```bash
+dotnet test Tests/CropMarket.Tests
+```
+
+Latest result: 39 passed, 0 failed. Test plan and results: [docs/testing/test-plan.md](docs/testing/test-plan.md) · [docs/testing/test-results.md](docs/testing/test-results.md)
+
 ## Current Status
 
-Week 5 – Core implementation. The complete marketplace workflow works for both roles: a farmer publishes a listing
-with a photo, a consumer finds it and orders it with cash on delivery, the stock goes down in the same transaction,
-the farmer is notified and moves the order from Pending to Preparing to Delivered, and the consumer follows the status
-and can edit or cancel the order while it is pending. Every error is returned in the same ProblemDetails format.
-Details: [Development stage 2](docs/development-stage-2.md) · [Development stage 3](docs/development-stage-3.md)
+Week 6 – Testing and validation. The complete marketplace workflow of Week 5 is now covered by automated tests.
+The open checks from Week 5 passed: 403 for another farmer's order, two orders at the same moment and the search time.
+Two defects found by boundary tests were fixed and retested:
+* order quantities with more than two decimals were rounded by the database;
+* two sign-ups with the same e-mail at the same moment returned a server error.
+
+Details: [Development stage 4](docs/development-stage-4.md)
 
 ### Known limitations
 
-* There are no automated unit or integration tests yet; all checks are manual `.http` requests and browser checks (Week 6).
-* The rule that a farmer cannot change another farmer's order (403) and two orders at the same moment (409) have not been tested systematically yet (Week 6).
-* NFR-01 (search under 2 seconds with 100 listings) has not been measured yet (Week 6).
+* The React client has no automated tests; the screens were checked manually (`evidence/week-06/ui*.png`).
+* The quantity of a listing still accepts more than two decimals (only the order quantity was fixed).
+* NFR-01 was measured inside the test process, without network and browser time.
 * Notifications are checked when the page loads; they are not pushed in real time.
 * Photos are stored on the local disk of the API, not in cloud storage.
 * Online payment, delivery tracking and the mobile application are future work.
@@ -138,3 +160,7 @@ Details: [Development stage 2](docs/development-stage-2.md) · [Development stag
 * [Development stage 2](docs/development-stage-2.md)
 * [Development stage 3](docs/development-stage-3.md)
 * [Week 5 progress](docs/weekly-progress/week05.md)
+* [Development stage 4](docs/development-stage-4.md)
+* [Test plan](docs/testing/test-plan.md)
+* [Test results](docs/testing/test-results.md)
+* [Week 6 progress](docs/weekly-progress/week06.md)

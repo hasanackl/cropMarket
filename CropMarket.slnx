@@ -14,4 +14,7 @@
       <Deploy />
     </Project>
   </Folder>
+  <Folder Name="/Tests/">
+    <Project Path="Tests/CropMarket.Tests/CropMarket.Tests.csproj" />
+  </Folder>
 </Solution>
