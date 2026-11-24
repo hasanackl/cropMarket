@@ -260,6 +260,13 @@ public class OrderService : IOrderService
             return "Quantity must be greater than zero.";
         }
 
+        // The database keeps quantities as decimal(10,2). More decimals would be rounded on save,
+        // e.g. 0.001 kg became an order of 0.00 kg (found by TC33 in Week 6), so they are rejected here.
+        if (decimal.Round(quantity, 2) != quantity)
+        {
+            return "Quantity can have at most two decimal places.";
+        }
+
         // Pieces and boxes cannot be split; only kilograms may have decimals
         if (unit != Unit.Kg && quantity != decimal.Floor(quantity))
         {
