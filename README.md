@@ -58,7 +58,7 @@ Data model, API endpoints and design decisions: [component interfaces](docs/desi
 |Backend|ASP.NET Core Web API on .NET 10 (C#), JWT bearer authentication, BCrypt password hashing|
 |Data|Entity Framework Core 10 with SQL Server LocalDB|
 |Frontend|React 19 + TypeScript, Vite, React Router, Tailwind CSS, Font Awesome, i18next (EN/TR)|
-|Tools|Visual Studio, Swagger, Git and GitHub|
+|Tools|Visual Studio (optional), dotnet-ef (local tool), Swagger, Git and GitHub|
 
 The reasons for these choices are recorded in [docs/design/design-decisions.md](docs/design/design-decisions.md).
 
@@ -66,6 +66,8 @@ The reasons for these choices are recorded in [docs/design/design-decisions.md](
 
 ```text
 CropMarket.slnx
+global.json                   .NET SDK version
+dotnet-tools.json             local dotnet-ef tool
 Core/
   CropMarket.Domain/          entities (User, Listing, Order, City) and enums
   CropMarket.Application/     Features/ (Auth, Listings, Orders, Cities): services, requests, DTOs, results
@@ -75,40 +77,49 @@ Infrastructure/
   CropMarket.Infrastructure/  BCrypt password hashing and JWT token service
 Presentation/
   CropMarket.API/             controllers, error handling, image storage, Program.cs, CropMarket.API.http
-  CropMarket.Web/             React + TypeScript client
+  CropMarket.Web/             React + TypeScript client (.nvmrc, .env.example)
 Tests/
   CropMarket.Tests/           xUnit tests: Services/, Api/, Performance/, Robustness/
 ```
 
-## Running the Project
+## Installation and Running
 
-**Requirements:** .NET 10 SDK, Node.js 22 or newer, SQL Server LocalDB (installed with Visual Studio).
+The complete step-by-step guide, with expected output and common problems, is in
+[docs/installation/installation-guide.md](docs/installation/installation-guide.md).
+Tested versions of all tools and packages: [docs/installation/dependencies.md](docs/installation/dependencies.md).
 
-**1. Backend**
+**Prerequisites (tested versions):** Windows 10/11 · .NET SDK 10.0.401 or newer (pinned in `global.json`) ·
+SQL Server Express LocalDB (tested: SQL Server 2025 LocalDB) · Node.js 22.12 or newer (tested: 22.20.0, see `.nvmrc`) · Git.
+Visual Studio is optional.
 
-```bash
-cd Presentation/CropMarket.API
-dotnet user-secrets set "Jwt:Key" "<a random secret of at least 32 characters>"
-cd ../..
-dotnet tool install --global dotnet-ef
+**Quick start** (Command Prompt, from the repository folder):
+
+```cmd
+git clone https://github.com/hasanackl/cropMarket.git
+cd cropMarket
+dotnet tool restore
+dotnet user-secrets set "Jwt:Key" "<any random text of at least 32 characters>" --project Presentation/CropMarket.API
 dotnet ef database update --project Infrastructure/CropMarket.Persistence --startup-project Presentation/CropMarket.API
 dotnet run --project Presentation/CropMarket.API --launch-profile http
 ```
 
-The API runs at http://localhost:5045 and Swagger at http://localhost:5045/swagger.
+The API runs at http://localhost:5045 (Swagger: http://localhost:5045/swagger).
 `Presentation/CropMarket.API/CropMarket.API.http` contains example requests for every endpoint.
 
-**2. Frontend** (in a second terminal)
+In a second Command Prompt:
 
-```bash
-cd Presentation/CropMarket.Web
-npm install
+```cmd
+cd Presentation\CropMarket.Web
+npm ci
 npm run dev
 ```
 
-Open http://localhost:5173. The API address is set in `Presentation/CropMarket.Web/.env.development`.
+Open http://localhost:5173.
+
+**Configuration:** the JWT signing key is kept in .NET user secrets and is never committed. All other settings
+(LocalDB connection string, JWT issuer/audience, `Cors:AllowedOrigins`) are in `appsettings.json`; the web client reads
+`VITE_API_URL` from `.env.development` (template: `.env.example`). The migrations create the database and the 81 cities.
 Uploaded listing photos are saved in `Presentation/CropMarket.API/wwwroot/uploads/` and are not added to Git.
-The allowed web address for CORS is set in `Cors:AllowedOrigins` in `appsettings.json`.
 
 ## Testing
 
@@ -122,7 +133,7 @@ The test project `Tests/CropMarket.Tests` (xUnit) contains 34 test methods (39 c
 
 The tests use their own SQL Server LocalDB database `CropMarketTestDb`, which is created from the migrations at the start of every run.
 
-```bash
+```cmd
 dotnet test Tests/CropMarket.Tests
 ```
 
@@ -130,17 +141,19 @@ Latest result: 39 passed, 0 failed. Test plan and results: [docs/testing/test-pl
 
 ## Current Status
 
-Week 6 – Testing and validation. The complete marketplace workflow of Week 5 is now covered by automated tests.
-The open checks from Week 5 passed: 403 for another farmer's order, two orders at the same moment and the search time.
-Two defects found by boundary tests were fixed and retested:
-* order quantities with more than two decimals were rounded by the database;
-* two sign-ups with the same e-mail at the same moment returned a server error.
+Week 7 – Reproducibility, installation and integration. The complete use case was run end to end, and the project was installed
+from a fresh clone using only the [installation guide](docs/installation/installation-guide.md): all eight checks passed
+(clone, dependencies, configuration, database and start, main use case, 39/39 tests, web build, solution build).
+The toolchain is pinned (`global.json`, `dotnet-tools.json`, `.nvmrc`) and a scan of all commits found no secrets.
+One problem found by the fresh-clone test was fixed and retested:
+* `npm ci` reported 9 moderate vulnerabilities in development packages (minimatch via eslint); `npm audit fix` removed them.
 
-Details: [Development stage 4](docs/development-stage-4.md)
+Details: [Development stage 5](docs/development-stage-5.md) · [Reproducibility results](docs/testing/reproducibility-results.md)
 
 ### Known limitations
 
 * The React client has no automated tests; the screens were checked manually (`evidence/week-06/ui*.png`).
+* The installation was tested on Windows only (LocalDB is Windows-only) and by the developer, not by a second person.
 * The quantity of a listing still accepts more than two decimals (only the order quantity was fixed).
 * NFR-01 was measured inside the test process, without network and browser time.
 * Notifications are checked when the page loads; they are not pushed in real time.
@@ -164,3 +177,8 @@ Details: [Development stage 4](docs/development-stage-4.md)
 * [Test plan](docs/testing/test-plan.md)
 * [Test results](docs/testing/test-results.md)
 * [Week 6 progress](docs/weekly-progress/week06.md)
+* [Installation guide](docs/installation/installation-guide.md)
+* [Dependencies and tested environment](docs/installation/dependencies.md)
+* [Development stage 5](docs/development-stage-5.md)
+* [Reproducibility results](docs/testing/reproducibility-results.md)
+* [Week 7 progress](docs/weekly-progress/week07.md)

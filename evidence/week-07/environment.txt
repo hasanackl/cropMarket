@@ -1,0 +1,693 @@
+
+===== Date =====
+2026-11-26 14:00
+
+===== Git =====
+git version 2.45.1.windows.1
+branch: docs/week7-installation
+commit: 5ec9865
+
+===== Operating system =====
+Microsoft Windows 11 Pro 10.0.26200 64 bit
+
+===== Hardware =====
+11th Gen Intel(R) Core(TM) i7-11800H @ 2.30GHz
+RAM GB: 15.7
+
+===== dotnet --info =====
+.NET SDK:
+ Version:           10.0.401
+ Commit:            e34a38d2ae
+ Workload version:  10.0.400-manifests.b0700452
+ MSBuild version:   18.9.11+e34a38d2a
+
+Çalışma Zamanı Ortamı:
+ OS Name:     Windows
+ OS Version:  10.0.26200
+ OS Platform: Windows
+ RID:         win-x64
+ Base Path:   C:\Program Files\dotnet\sdk\10.0.401\
+
+.NET iş yükleri yüklendi:
+Görüntülenecek yüklü iş yükü yok.
+Yeni bildirimler yüklenirken workload sets kullanacak şekilde yapılandırılmıştır.
+İş yükü kümesi yüklenmemiştir. Bir iş yükü seti yüklemek için “dotnet workload restore” komutunu çalıştırın.
+
+Host:
+  Version:      10.0.12
+  Architecture: x64
+  Commit:       95017c711e
+
+.NET SDKs installed:
+  9.0.300 [C:\Program Files\dotnet\sdk]
+  9.0.301 [C:\Program Files\dotnet\sdk]
+  10.0.300 [C:\Program Files\dotnet\sdk]
+  10.0.401 [C:\Program Files\dotnet\sdk]
+
+.NET runtimes installed:
+  Microsoft.AspNetCore.App 3.1.32 [C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App]
+  Microsoft.AspNetCore.App 8.0.17 [C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App]
+  Microsoft.AspNetCore.App 8.0.31 [C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App]
+  Microsoft.AspNetCore.App 9.0.5 [C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App]
+  Microsoft.AspNetCore.App 9.0.6 [C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App]
+  Microsoft.AspNetCore.App 9.0.20 [C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App]
+  Microsoft.AspNetCore.App 10.0.8 [C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App]
+  Microsoft.AspNetCore.App 10.0.12 [C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App]
+  Microsoft.NETCore.App 3.1.32 [C:\Program Files\dotnet\shared\Microsoft.NETCore.App]
+  Microsoft.NETCore.App 8.0.17 [C:\Program Files\dotnet\shared\Microsoft.NETCore.App]
+  Microsoft.NETCore.App 8.0.31 [C:\Program Files\dotnet\shared\Microsoft.NETCore.App]
+  Microsoft.NETCore.App 9.0.5 [C:\Program Files\dotnet\shared\Microsoft.NETCore.App]
+  Microsoft.NETCore.App 9.0.6 [C:\Program Files\dotnet\shared\Microsoft.NETCore.App]
+  Microsoft.NETCore.App 9.0.20 [C:\Program Files\dotnet\shared\Microsoft.NETCore.App]
+  Microsoft.NETCore.App 10.0.8 [C:\Program Files\dotnet\shared\Microsoft.NETCore.App]
+  Microsoft.NETCore.App 10.0.12 [C:\Program Files\dotnet\shared\Microsoft.NETCore.App]
+  Microsoft.WindowsDesktop.App 3.1.32 [C:\Program Files\dotnet\shared\Microsoft.WindowsDesktop.App]
+  Microsoft.WindowsDesktop.App 8.0.17 [C:\Program Files\dotnet\shared\Microsoft.WindowsDesktop.App]
+  Microsoft.WindowsDesktop.App 8.0.31 [C:\Program Files\dotnet\shared\Microsoft.WindowsDesktop.App]
+  Microsoft.WindowsDesktop.App 9.0.5 [C:\Program Files\dotnet\shared\Microsoft.WindowsDesktop.App]
+  Microsoft.WindowsDesktop.App 9.0.6 [C:\Program Files\dotnet\shared\Microsoft.WindowsDesktop.App]
+  Microsoft.WindowsDesktop.App 9.0.20 [C:\Program Files\dotnet\shared\Microsoft.WindowsDesktop.App]
+  Microsoft.WindowsDesktop.App 10.0.8 [C:\Program Files\dotnet\shared\Microsoft.WindowsDesktop.App]
+  Microsoft.WindowsDesktop.App 10.0.12 [C:\Program Files\dotnet\shared\Microsoft.WindowsDesktop.App]
+
+Other architectures found:
+  x86   [C:\Program Files (x86)\dotnet]
+    registered at [HKLM\SOFTWARE\dotnet\Setup\InstalledVersions\x86\InstallLocation]
+
+Environment variables:
+  Not set
+
+global.json file:
+  Not found
+
+Learn more:
+  https://aka.ms/dotnet/info
+
+Download .NET:
+  https://aka.ms/dotnet/download
+
+===== dotnet-ef =====
+Entity Framework Core .NET Command-line Tools
+10.0.14
+
+===== Global dotnet tools =====
+Paket Kimliği      Sürüm        Komutlar 
+-----------------------------------------
+dotnet-ef          10.0.14      dotnet-ef
+
+===== Local dotnet tools =====
+Paket Kimliği      Sürüm      Komutlar      Bildirim
+----------------------------------------------------
+
+===== Node / npm =====
+node v22.20.0
+npm 10.9.3
+
+===== SQL Server LocalDB =====
+Microsoft SQL Server 2025 (17.0.4025.3)
+Name:               MSSQLLocalDB
+
+Version:            17.0.4025.3
+
+Shared name:        
+
+Owner:              <computer>\<user>
+
+Auto-create:        Yes
+
+State:              Running
+
+Last start time:    26.11.2026 13:49:47
+
+Instance pipe name: np:\\.\pipe\LOCALDB#75AE582E\tsql\query
+
+
+===== Visual Studio =====
+Visual Studio Community 2026
+18.10.3
+
+===== NuGet packages (dotnet list package) =====
+  Geri yüklenecek projeler belirleniyor...
+  Geri yükleme için tüm projeler güncel.
+'CropMarket.Application' projesi aşağıdaki paket başvurularına sahip
+   [net10.0]: 
+   Üst Düzey Paket                      İstendi   Çözümlendi
+   > Microsoft.EntityFrameworkCore      10.0.14   10.0.14   
+
+'CropMarket.Domain' projesi aşağıdaki paket başvurularına sahip
+   [net10.0]: Bu çerçeve için paket bulunamadı.
+'CropMarket.Infrastructure' projesi aşağıdaki paket başvurularına sahip
+   [net10.0]: 
+   Üst Düzey Paket                                              İstendi   Çözümlendi
+   > BCrypt.Net-Next                                            4.2.0     4.2.0     
+   > Microsoft.Extensions.DependencyInjection.Abstractions      10.0.14   10.0.14   
+   > Microsoft.Extensions.Options.ConfigurationExtensions       10.0.14   10.0.14   
+   > Microsoft.IdentityModel.JsonWebTokens                      8.23.0    8.23.0    
+
+'CropMarket.Persistence' projesi aşağıdaki paket başvurularına sahip
+   [net10.0]: 
+   Üst Düzey Paket                                İstendi   Çözümlendi
+   > Microsoft.EntityFrameworkCore.SqlServer      10.0.14   10.0.14   
+   > System.Security.Cryptography.Pkcs            10.0.14   10.0.14   
+
+'CropMarket.API' projesi aşağıdaki paket başvurularına sahip
+   [net10.0]: 
+   Üst Düzey Paket                                      İstendi   Çözümlendi
+   > Microsoft.AspNetCore.Authentication.JwtBearer      10.0.14   10.0.14   
+   > Microsoft.AspNetCore.OpenApi                       10.0.12   10.0.12   
+   > Microsoft.EntityFrameworkCore.Tools                10.0.14   10.0.14   
+   > Swashbuckle.AspNetCore                             10.3.1    10.3.1    
+
+
+dotnet : `C:\Users\Hasan\croptrader\Presentation\CropMarket.Web\CropMarket.Web.esproj` projesi, NuGuet paketleri için 
+package.config dosyasını kullanıyor fakat komut yalnızca paket başvurusu projeleriyle çalışır.
+At C:\Users\Hasan\croptrader\.vs\gun2-ortam.ps1:27 char:53
++ ...  packages (dotnet list package)"; dotnet list CropMarket.slnx package
++                                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: (`C:\Users\Hasan...le çalışır.:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+
+===== npm packages (top level) =====
+cropmarket.web@0.0.0 C:\Users\Hasan\croptrader\Presentation\CropMarket.Web
++-- @eslint/js@10.0.1
++-- @fontsource-variable/inter@5.3.0
++-- @fortawesome/fontawesome-svg-core@7.3.1
++-- @fortawesome/free-solid-svg-icons@7.3.1
++-- @fortawesome/react-fontawesome@3.5.0
++-- @tailwindcss/vite@4.3.4
++-- @types/node@24.19.2
++-- @types/react-dom@19.3.0
++-- @types/react@19.3.0
++-- @vitejs/plugin-react@6.2.1
++-- eslint-plugin-react-hooks@7.1.1
++-- eslint-plugin-react-refresh@0.5.7
++-- eslint@10.14.0
++-- globals@17.14.0
++-- i18next@26.7.1
++-- react-dom@19.3.1
++-- react-i18next@17.1.12
++-- react-router@7.18.5
++-- react@19.3.1
++-- tailwindcss@4.3.4
++-- typescript-eslint@8.72.1
++-- typescript@6.0.3
+`-- vite@8.3.5
+
+
+===== package.json engines / scripts =====
+{
+  "name": "cropmarket.web",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "lint": "eslint .",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@fontsource-variable/inter": "^5.3.0",
+    "@fortawesome/fontawesome-svg-core": "^7.3.1",
+    "@fortawesome/free-solid-svg-icons": "^7.3.1",
+    "@fortawesome/react-fontawesome": "^3.5.0",
+    "@tailwindcss/vite": "^4.3.4",
+    "i18next": "^26.7.1",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "react-i18next": "^17.1.12",
+    "react-router": "^7.18.5",
+    "tailwindcss": "^4.3.4"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/node": "^24.19.2",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.1.2",
+    "eslint": "^10.13.0",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "eslint-plugin-react-refresh": "^0.5.7",
+    "globals": "^17.13.0",
+    "typescript": "~6.0.3",
+    "typescript-eslint": "^8.72.0",
+    "vite": "^8.3.5"
+  }
+}
+
+
+===== Reproducibility files present? =====
+global.json                                             False
+.config\dotnet-tools.json                               False
+Presentation\CropMarket.Web\.nvmrc                      False
+Presentation\CropMarket.Web\.env.example                False
+Presentation\CropMarket.Web\package-lock.json           True
+Presentation\CropMarket.API\appsettings.Development.json True
+
+===== Config files tracked by Git =====
+.gitignore
+Presentation/CropMarket.API/CropMarket.API.http
+Presentation/CropMarket.API/Properties/launchSettings.json
+Presentation/CropMarket.API/appsettings.Development.json
+Presentation/CropMarket.API/appsettings.json
+Presentation/CropMarket.Web/.env.development
+Presentation/CropMarket.Web/package-lock.json
+Presentation/CropMarket.Web/package.json
+Presentation/CropMarket.Web/tsconfig.app.json
+Presentation/CropMarket.Web/tsconfig.json
+Presentation/CropMarket.Web/tsconfig.node.json
+
+===== .gitignore =====
+## Ignore Visual Studio temporary files, build results, and
+## files generated by popular Visual Studio add-ons.
+##
+## Get latest from https://github.com/github/gitignore/blob/main/VisualStudio.gitignore
+
+# User-specific files
+*.rsuser
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+*.env
+
+# User-specific files (MonoDevelop/Xamarin Studio)
+*.userprefs
+
+# Mono auto generated files
+mono_crash.*
+
+# Build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Rr]elease/
+[Rr]eleases/
+
+[Dd]ebug/x64/
+[Dd]ebugPublic/x64/
+[Rr]elease/x64/
+[Rr]eleases/x64/
+bin/x64/
+obj/x64/
+
+[Dd]ebug/x86/
+[Dd]ebugPublic/x86/
+[Rr]elease/x86/
+[Rr]eleases/x86/
+bin/x86/
+obj/x86/
+
+[Ww][Ii][Nn]32/
+[Aa][Rr][Mm]/
+[Aa][Rr][Mm]64/
+[Aa][Rr][Mm]64[Ee][Cc]/
+bld/
+[Oo]bj/
+[Oo]ut/
+[Ll]og/
+[Ll]ogs/
+
+# Build results on 'Bin' directories
+**/[Bb]in/*
+# Uncomment if you have tasks that rely on *.refresh files to move binaries
+# (https://github.com/github/gitignore/pull/3736)
+#!**/[Bb]in/*.refresh
+
+# Visual Studio 2015/2017 cache/options directory
+.vs/
+# Uncomment if you have tasks that create the project's static files in wwwroot
+#wwwroot/
+
+# Visual Studio 2017 auto generated files
+Generated\ Files/
+
+# MSTest test Results
+[Tt]est[Rr]esult*/
+[Bb]uild[Ll]og.*
+*.trx
+
+# NUnit
+*.VisualState.xml
+TestResult.xml
+nunit-*.xml
+
+# Approval Tests result files
+*.received.*
+
+# Build Results of an ATL Project
+[Dd]ebugPS/
+[Rr]eleasePS/
+dlldata.c
+
+# Benchmark Results
+BenchmarkDotNet.Artifacts/
+
+# .NET Core
+project.lock.json
+project.fragment.lock.json
+artifacts/
+.artifacts/
+
+# ASP.NET Scaffolding
+ScaffoldingReadMe.txt
+
+# StyleCop
+StyleCopReport.xml
+
+# Files built by Visual Studio
+*_i.c
+*_p.c
+*_h.h
+*.ilk
+*.meta
+*.obj
+*.idb
+*.iobj
+*.pch
+*.pdb
+*.ipdb
+*.pgc
+*.pgd
+*.rsp
+# but not Directory.Build.rsp, as it configures directory-level build defaults
+!Directory.Build.rsp
+*.sbr
+*.tlb
+*.tli
+*.tlh
+*.tmp
+*.tmp_proj
+*_wpftmp.csproj
+*.log
+*.tlog
+*.vspscc
+*.vssscc
+.builds
+*.pidb
+*.svclog
+*.scc
+
+# Chutzpah Test files
+_Chutzpah*
+
+# Visual C++ cache files
+ipch/
+*.aps
+*.ncb
+*.opendb
+*.opensdf
+*.sdf
+*.cachefile
+*.VC.db
+*.VC.VC.opendb
+
+# Visual Studio profiler
+*.psess
+*.vsp
+*.vspx
+*.sap
+
+# Visual Studio Trace Files
+*.e2e
+
+# TFS 2012 Local Workspace
+$tf/
+
+# Guidance Automation Toolkit
+*.gpState
+
+# ReSharper is a .NET coding add-in
+_ReSharper*/
+*.[Rr]e[Ss]harper
+*.DotSettings.user
+
+# TeamCity is a build add-in
+_TeamCity*
+
+# DotCover is a Code Coverage Tool
+*.dotCover
+
+# AxoCover is a Code Coverage Tool
+.axoCover/*
+!.axoCover/settings.json
+
+# Coverlet is a free, cross platform Code Coverage Tool
+coverage*.json
+coverage*.xml
+coverage*.info
+
+# Visual Studio code coverage results
+*.coverage
+*.coveragexml
+
+# NCrunch
+_NCrunch_*
+.NCrunch_*
+.*crunch*.local.xml
+nCrunchTemp_*
+
+# MightyMoose
+*.mm.*
+AutoTest.Net/
+
+# Web workbench (sass)
+.sass-cache/
+
+# Installshield output folder
+[Ee]xpress/
+
+# DocProject is a documentation generator add-in
+DocProject/buildhelp/
+DocProject/Help/*.HxT
+DocProject/Help/*.HxC
+DocProject/Help/*.hhc
+DocProject/Help/*.hhk
+DocProject/Help/*.hhp
+DocProject/Help/Html2
+DocProject/Help/html
+
+# Click-Once directory
+publish/
+
+# Publish Web Output
+*.[Pp]ublish.xml
+*.azurePubxml
+# Note: Comment the next line if you want to checkin your web deploy settings,
+# but database connection strings (with potential passwords) will be unencrypted
+*.pubxml
+*.publishproj
+
+# Microsoft Azure Web App publish settings. Comment the next line if you want to
+# checkin your Azure Web App publish settings, but sensitive information contained
+# in these scripts will be unencrypted
+PublishScripts/
+
+# NuGet Packages
+*.nupkg
+# NuGet Symbol Packages
+*.snupkg
+# The packages folder can be ignored because of Package Restore
+**/[Pp]ackages/*
+# except build/, which is used as an MSBuild target.
+!**/[Pp]ackages/build/
+# Uncomment if necessary however generally it will be regenerated when needed
+#!**/[Pp]ackages/repositories.config
+# NuGet v3's project.json files produces more ignorable files
+*.nuget.props
+*.nuget.targets
+
+# Microsoft Azure Build Output
+csx/
+*.build.csdef
+
+# Microsoft Azure Emulator
+ecf/
+rcf/
+
+# Windows Store app package directories and files
+AppPackages/
+BundleArtifacts/
+Package.StoreAssociation.xml
+_pkginfo.txt
+*.appx
+*.appxbundle
+*.appxupload
+
+# Visual Studio cache files
+# files ending in .cache can be ignored
+*.[Cc]ache
+# but keep track of directories ending in .cache
+!?*.[Cc]ache/
+
+# Others
+ClientBin/
+~$*
+*~
+*.dbmdl
+*.dbproj.schemaview
+*.jfm
+*.pfx
+*.publishsettings
+orleans.codegen.cs
+
+# Since there are multiple workflows, uncomment next line to ignore bower_components
+# (https://github.com/github/gitignore/pull/1529#issuecomment-104372622)
+#bower_components/
+
+# RIA/Silverlight projects
+Generated_Code/
+
+# Backup & report files from converting an old project file
+# to a newer Visual Studio version. Backup files are not needed,
+# because we have git ;-)
+_UpgradeReport_Files/
+Backup*/
+UpgradeLog*.XML
+UpgradeLog*.htm
+ServiceFabricBackup/
+*.rptproj.bak
+
+# SQL Server files
+*.mdf
+*.ldf
+*.ndf
+
+# Business Intelligence projects
+*.rdl.data
+*.bim.layout
+*.bim_*.settings
+*.rptproj.rsuser
+*- [Bb]ackup.rdl
+*- [Bb]ackup ([0-9]).rdl
+*- [Bb]ackup ([0-9][0-9]).rdl
+
+# Microsoft Fakes
+FakesAssemblies/
+
+# GhostDoc plugin setting file
+*.GhostDoc.xml
+
+# Node.js Tools for Visual Studio
+.ntvs_analysis.dat
+node_modules/
+
+# Visual Studio 6 build log
+*.plg
+
+# Visual Studio 6 workspace options file
+*.opt
+
+# Visual Studio 6 auto-generated workspace file (contains which files were open etc.)
+*.vbw
+
+# Visual Studio 6 workspace and project file (working project files containing files to include in project)
+*.dsw
+*.dsp
+
+# Visual Studio 6 technical files
+*.ncb
+*.aps
+
+# Visual Studio LightSwitch build output
+**/*.HTMLClient/GeneratedArtifacts
+**/*.DesktopClient/GeneratedArtifacts
+**/*.DesktopClient/ModelManifest.xml
+**/*.Server/GeneratedArtifacts
+**/*.Server/ModelManifest.xml
+_Pvt_Extensions
+
+# Paket dependency manager
+**/.paket/paket.exe
+paket-files/
+
+# FAKE - F# Make
+**/.fake/
+
+# CodeRush personal settings
+**/.cr/personal
+
+# Python Tools for Visual Studio (PTVS)
+**/__pycache__/
+*.pyc
+
+# Cake - Uncomment if you are using it
+#tools/**
+#!tools/packages.config
+
+# Tabs Studio
+*.tss
+
+# Telerik's JustMock configuration file
+*.jmconfig
+
+# BizTalk build output
+*.btp.cs
+*.btm.cs
+*.odx.cs
+*.xsd.cs
+
+# OpenCover UI analysis results
+OpenCover/
+
+# Azure Stream Analytics local run output
+ASALocalRun/
+
+# MSBuild Binary and Structured Log
+*.binlog
+MSBuild_Logs/
+
+# AWS SAM Build and Temporary Artifacts folder
+.aws-sam
+
+# NVidia Nsight GPU debugger configuration file
+*.nvuser
+
+# MFractors (Xamarin productivity tool) working folder
+**/.mfractor/
+
+# Local History for Visual Studio
+**/.localhistory/
+
+# Visual Studio History (VSHistory) files
+.vshistory/
+
+# BeatPulse healthcheck temp database
+healthchecksdb
+
+# Backup folder for Package Reference Convert tool in Visual Studio 2017
+MigrationBackup/
+
+# Ionide (cross platform F# VS Code tools) working folder
+**/.ionide/
+
+# Fody - auto-generated XML schema
+FodyWeavers.xsd
+
+# VS Code files for those working on multiple tools
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+!.vscode/*.code-snippets
+
+# Local History for Visual Studio Code
+.history/
+
+# Built Visual Studio Code Extensions
+*.vsix
+
+# Windows Installer files from build outputs
+*.cab
+*.msi
+*.msix
+*.msm
+*.msp
+
+# Official VS Code C# Dev Kit Extension exclusion
+#*.lscache
+
+# Listing photos uploaded while testing (FR-12)
+Presentation/CropMarket.API/wwwroot/uploads/*
+!Presentation/CropMarket.API/wwwroot/uploads/.gitkeep

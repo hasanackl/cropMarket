@@ -1,0 +1,21 @@
+# Week 7 fresh clone test - terminal 1, part 2 (copied from console by Hasan, 2026-11-26)
+# R03 configure: first run WITHOUT the JWT key (expected: clear error)
+> $env:ConnectionStrings__DefaultConnection = "Server=(localdb)\MSSQLLocalDB;Database=CropMarketFreshDb;Trusted_Connection=True;TrustServerCertificate=True"
+> dotnet run --project Presentation/CropMarket.API --launch-profile http
+Unhandled exception. System.InvalidOperationException: Jwt:Key is missing. Set it with dotnet user-secrets.
+   at CropMarket.API.Extensions.JwtAuthenticationExtensions.AddJwtAuthentication(...) in ...\JwtAuthenticationExtensions.cs:line 16
+   at Program.<Main>$(String[] args) in C:\temp\cropmarket-fresh\Presentation\CropMarket.API\Program.cs:line 20
+> dotnet user-secrets set "Jwt:Key" "fresh-clone-test-key-0123456789-abcdefghij" --project Presentation/CropMarket.API
+Successfully saved Jwt:Key to the secret store.
+# R04 database
+> dotnet ef database update --project Infrastructure/CropMarket.Persistence --startup-project Presentation/CropMarket.API
+Build started...
+Build succeeded.
+      CREATE DATABASE [CropMarketFreshDb];
+Applying migration '20261104212647_InitialCreate'.
+Applying migration '20261116121629_AddOrders'.
+Applying migration '20261116190849_AddOrderCancelAndNotifications'.
+Applying migration '20261116205031_AddCitiesAndListingImages'.
+      INSERT INTO [Cities] ... (1, N'Adana') ... (81, N'Düzce')
+      CREATE UNIQUE INDEX [IX_Cities_Name] ON [Cities] ([Name]);
+Done.
