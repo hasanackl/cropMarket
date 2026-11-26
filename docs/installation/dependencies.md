@@ -17,7 +17,7 @@ The values were collected on 26 November 2026 with a script on the development c
 | Tool | Version tested | Minimum | Purpose | Pinned in |
 |---|---|---|---|---|
 | .NET SDK | 10.0.401 (runtime 10.0.12) | 10.0.401 | Build, run and test the API | `global.json` |
-| dotnet-ef (EF Core CLI) | 10.0.14 | same as EF Core packages | Create the database from the migrations | `.config/dotnet-tools.json` |
+| dotnet-ef (EF Core CLI) | 10.0.14 | same as EF Core packages | Create the database from the migrations | `dotnet-tools.json` (repository root) |
 | SQL Server LocalDB | SQL Server 2025 (17.0.4025.3), instance `MSSQLLocalDB` | any LocalDB 2019 or newer | Database for the API and the tests | – |
 | Node.js | 22.20.0 | 22.12 | Build and run the React client | `.nvmrc`, `package.json` engines |
 | npm | 10.9.3 | comes with Node.js | Install the web packages | `package-lock.json` |
@@ -59,7 +59,7 @@ Declared in `Presentation/CropMarket.Web/package.json`; the exact tree is locked
 | @fontsource-variable/inter | 5.3.0 | Font |
 | vite, @vitejs/plugin-react | 8.3.5, 6.2.1 | Development server and build (dev) |
 | typescript | 6.0.3 | Type checking (dev) |
-| eslint, typescript-eslint | 10.14.0, 8.72.1 | Linting (dev) |
+| eslint, typescript-eslint | 10.15.0, 8.74.0 (updated by `npm audit fix` in Week 7) | Linting (dev) |
 
 ## 5. Configuration and data
 

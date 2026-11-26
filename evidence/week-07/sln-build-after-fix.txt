@@ -1,0 +1,16 @@
+  Geri yüklenecek projeler belirleniyor...
+  Geri yükleme için tüm projeler güncel.
+  WorkingDirectory: C:\Users\Hasan\croptrader\Presentation\CropMarket.Web
+  ProcessStartInfo.WorkingDirectory: C:\Users\Hasan\croptrader\Presentation\CropMarket.Web\
+  CropMarket.Domain -> C:\Users\Hasan\croptrader\Core\CropMarket.Domain\bin\Debug\net10.0\CropMarket.Domain.dll
+  CropMarket.Application -> C:\Users\Hasan\croptrader\Core\CropMarket.Application\bin\Debug\net10.0\CropMarket.Application.dll
+  CropMarket.Infrastructure -> C:\Users\Hasan\croptrader\Infrastructure\CropMarket.Infrastructure\bin\Debug\net10.0\CropMarket.Infrastructure.dll
+  CropMarket.Persistence -> C:\Users\Hasan\croptrader\Infrastructure\CropMarket.Persistence\bin\Debug\net10.0\CropMarket.Persistence.dll
+  CropMarket.API -> C:\Users\Hasan\croptrader\Presentation\CropMarket.API\bin\Debug\net10.0\CropMarket.API.dll
+  CropMarket.Tests -> C:\Users\Hasan\croptrader\Tests\CropMarket.Tests\bin\Debug\net10.0\CropMarket.Tests.dll
+
+Oluşturma başarılı oldu.
+    0 Uyarı
+    0 Hata
+
+Geçen Süre 00:00:05.72

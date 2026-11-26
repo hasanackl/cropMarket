@@ -34,6 +34,8 @@ git clone https://github.com/hasanackl/cropMarket.git
 cd cropMarket
 ```
 
+All following commands are run **in this new folder**. If you already have another copy of the project, make sure the terminal is not in that copy (check the `Content root path` line when the API starts).
+
 ## 3. Install the .NET tools and packages
 
 ```cmd
@@ -125,8 +127,10 @@ Stop nothing; the tests use their own database `CropMarketTestDb`, which they cr
 dotnet test Tests/CropMarket.Tests
 ```
 
-Expected result: `Passed! - Failed: 0, Passed: 39`.
+Expected result: 39 tests, 0 failed (about 17 seconds).
 The web client can be checked with `npm run lint` and `npm run build` in `Presentation\CropMarket.Web`.
+
+Optional: `dotnet build CropMarket.slnx` builds all projects at once. The solution also contains `CropMarket.Web.esproj`, which runs npm through the Visual Studio JavaScript SDK; this was tested on a computer with Visual Studio 2026 installed. Without Visual Studio, use the project commands above.
 
 ## 10. Common installation problems
 
@@ -137,6 +141,7 @@ The web client can be checked with `npm run lint` and `npm run build` in `Presen
 | `Jwt:Key is missing. Set it with dotnet user-secrets.` when the API starts | Step 4 was skipped | Set the key with `dotnet user-secrets set` (step 4) |
 | `A network-related or instance-specific error occurred ...` during `dotnet ef database update` or `dotnet test` | LocalDB is not installed or not started | Install LocalDB; then `sqllocaldb start MSSQLLocalDB` |
 | `Failed to bind to address http://127.0.0.1:5045: address already in use` | Another program (or a second API window) uses the port | Close it, or change the port in `launchSettings.json` **and** `VITE_API_URL` |
+| `npm ci` or `dotnet build CropMarket.slnx` reports `moderate severity vulnerabilities` | Outdated development packages (found and fixed in Week 7) | Pull the latest version; `npm audit` must report 0 vulnerabilities |
 | `npm warn EBADENGINE` or Vite stops with a Node.js version message | Node.js is older than 22.12 | Install Node.js 22 LTS (`.nvmrc` contains the version for nvm users) |
 | The web page shows a network error / the browser console shows a CORS error | The API is not running, or its address is different from `VITE_API_URL` / `Cors:AllowedOrigins` | Start the API (step 6) and keep the three addresses consistent |
 

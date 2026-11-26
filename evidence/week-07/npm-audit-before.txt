@@ -1,0 +1,18 @@
+# npm audit (before fix) - C:\Users\Hasan\croptrader\Presentation\CropMarket.Web, 2026-11-26 16:29
+minimatch  7.0.0 - 11.0.0
+Severity: moderate
+minimatch has potential denial of service via globparts amplification - https://github.com/advisories/GHSA-g3hv-75wg-m249
+fix available via `npm audit fix`
+node_modules/minimatch
+  @eslint/config-array  0.23.0 - 0.23.5            Depends on vulnerable versions of minimatch
+  @typescript-eslint/typescript-estree  6.16.0 - 8.72.2
+    @typescript-eslint/parser  6.16.0 - 8.72.2
+      typescript-eslint  <=8.72.2
+    @typescript-eslint/type-utils  6.16.0 - 8.72.2
+      @typescript-eslint/eslint-plugin  6.16.0 - 8.72.2
+    @typescript-eslint/utils  6.16.0 - 8.72.2
+  eslint  10.0.0-alpha.0 - 10.14.0                  Depends on vulnerable versions of minimatch
+
+9 moderate severity vulnerabilities
+To address all issues, run:
+  npm audit fix

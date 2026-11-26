@@ -141,17 +141,19 @@ Latest result: 39 passed, 0 failed. Test plan and results: [docs/testing/test-pl
 
 ## Current Status
 
-Week 6 – Testing and validation. The complete marketplace workflow of Week 5 is now covered by automated tests.
-The open checks from Week 5 passed: 403 for another farmer's order, two orders at the same moment and the search time.
-Two defects found by boundary tests were fixed and retested:
-* order quantities with more than two decimals were rounded by the database;
-* two sign-ups with the same e-mail at the same moment returned a server error.
+Week 7 – Reproducibility, installation and integration. The complete use case was run end to end, and the project was installed
+from a fresh clone using only the [installation guide](docs/installation/installation-guide.md): all eight checks passed
+(clone, dependencies, configuration, database and start, main use case, 39/39 tests, web build, solution build).
+The toolchain is pinned (`global.json`, `dotnet-tools.json`, `.nvmrc`) and a scan of all commits found no secrets.
+One problem found by the fresh-clone test was fixed and retested:
+* `npm ci` reported 9 moderate vulnerabilities in development packages (minimatch via eslint); `npm audit fix` removed them.
 
-Details: [Development stage 4](docs/development-stage-4.md)
+Details: [Development stage 5](docs/development-stage-5.md) · [Reproducibility results](docs/testing/reproducibility-results.md)
 
 ### Known limitations
 
 * The React client has no automated tests; the screens were checked manually (`evidence/week-06/ui*.png`).
+* The installation was tested on Windows only (LocalDB is Windows-only) and by the developer, not by a second person.
 * The quantity of a listing still accepts more than two decimals (only the order quantity was fixed).
 * NFR-01 was measured inside the test process, without network and browser time.
 * Notifications are checked when the page loads; they are not pushed in real time.
@@ -177,3 +179,6 @@ Details: [Development stage 4](docs/development-stage-4.md)
 * [Week 6 progress](docs/weekly-progress/week06.md)
 * [Installation guide](docs/installation/installation-guide.md)
 * [Dependencies and tested environment](docs/installation/dependencies.md)
+* [Development stage 5](docs/development-stage-5.md)
+* [Reproducibility results](docs/testing/reproducibility-results.md)
+* [Week 7 progress](docs/weekly-progress/week07.md)

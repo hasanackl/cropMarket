@@ -1,0 +1,27 @@
+# Week 7 fresh clone test - terminal 1 (copied from console by Hasan, 2026-11-26 16:09, Windows PowerShell 5.1)
+> dotnet tool uninstall -g dotnet-ef
+'dotnet-ef' aracı (sürüm '10.0.14') başarıyla kaldırıldı.   [tool 'dotnet-ef' (version '10.0.14') was uninstalled]
+> git -C C:\Users\Hasan\croptrader log --oneline -1
+3a8ca19 (HEAD -> docs/week7-installation, origin/docs/week7-installation) docs: add step-by-step installation guide and update README
+# R01
+> git clone -b docs/week7-installation https://github.com/hasanackl/cropMarket.git C:\temp\cropmarket-fresh
+remote: Total 775 (delta 286), reused 726 (delta 243), pack-reused 0 (from 0)
+Receiving objects: 100% (775/775), 13.32 MiB | 4.94 MiB/s, done.
+> git log --oneline -1
+3a8ca19 (HEAD -> docs/week7-installation, origin/docs/week7-installation) docs: add step-by-step installation guide and update README
+> dotnet user-secrets clear --project Presentation/CropMarket.API
+# R02
+> dotnet --version
+10.0.401
+> dotnet tool restore
+'dotnet-ef' aracı (sürüm '10.0.14') geri yüklendi.   [tool 'dotnet-ef' (version '10.0.14') was restored]
+Geri yükleme başarılı oldu.   [Restore was successful.]
+> dotnet restore Presentation/CropMarket.API
+Geri yükleme tamamlandı (4,3sn)   [Restore complete (4.3 s)]
+> dotnet restore Tests/CropMarket.Tests
+Geri yükleme tamamlandı (2,4sn)   [Restore complete (2.4 s)]
+# R04 (API start, pasted separately)
+> dotnet run --project Presentation/CropMarket.API --launch-profile http
+info: Microsoft.Hosting.Lifetime[14]
+      Now listening on: http://localhost:5045
+      Content root path: C:\temp\cropmarket-fresh\Presentation\CropMarket.API
